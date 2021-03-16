@@ -32,7 +32,7 @@ public class MemberList implements Serializable {
 	 * @return display of all members starting with the string
 	 */
     public String retrieveMemberInfo(String memberString) {
-    	String memberDisplay = 'Members: \n';
+    	String memberDisplay = "Members: \n";
     	for(Iterator<Member> iterator = members.iterator(); iterator.hasNext();) {
     		Member member = iterator.next();
     		if(member.getName().startsWith(memberString)) {
@@ -68,7 +68,7 @@ public class MemberList implements Serializable {
 	 * @return display of all members starting with the string
 	 */
     public String listAllMembers() {
-    	String memberDisplay = 'All Members: \n';
+    	String memberDisplay = "All Members: \n";
     	for(Iterator<Member> iterator = members.iterator(); iterator.hasNext();) {
     		Member member = iterator.next();
     		memberDisplay += member.toString() + '\n';

@@ -11,14 +11,14 @@ import java.io.Serializable;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-//import java.util.Scanner;  
+
 
 //Took code from Andrew's Member List java file
 
 public class ProductList implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private List<Product> products = new LinkedList<Product>();
-//	private Scanner scan = new Scanner(System.in);
+
 
 	// business case 5
 	public void addExisitingProduct(String id) {
@@ -26,7 +26,7 @@ public class ProductList implements Serializable {
 			Product product = iterator.next();
 			if (product.getId().equals(id)) {
 				product.setInventory(product.getReorderThreshold() * 2); // can't remember is its * 2 all the time of or just first time
-				System.out.println("Product [id=" + product.getID() + ", name=" + product.getName() + ", price=" + product.getPrice() + ", inventory=" + inventory);
+				System.out.println("Product [id=" + product.getId() + ", name=" + product.getName() + ", price=" + product.getPrice() + ", inventory=" + product.getInventory());
 				break; // breaking loop and function - no longer needs it since item found
 			}
 		}

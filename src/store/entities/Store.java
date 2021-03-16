@@ -9,6 +9,10 @@ public class Store {
      * Private for the singleton pattern Creates the catalog and member collection
      * objects
      */
+	
+	//Keith Added
+	ProductList pList = new ProductList();
+	
     private Store() {
     }
 
@@ -35,11 +39,10 @@ public class Store {
     	System.out.println("Remove Member: " + memberId);
     }
     
-    public int addProduct(String id, String name, double price, int inventory, int reorderThreshold) {
-//    	ProductList pList = new ProductList();
-//    	pList.addNeProduct(id);
-    	int productId = 123456;
-    	return productId;
+    public Product addProduct(String id, String name, double price, int inventory, int reorderThreshold) {
+    	Product product = new Product(id, name, price, inventory, reorderThreshold);
+    	pList.addNewProduct(product);    	
+    	return product;
     }
     
     public String checkout(Hashtable<String,Integer> cart) {

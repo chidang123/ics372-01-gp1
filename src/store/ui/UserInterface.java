@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Date;
 import java.util.Hashtable;
+import java.util.Scanner;
+  
 
 public class UserInterface {
 	private static UserInterface userInterface;
@@ -27,6 +29,9 @@ public class UserInterface {
     private static final int LIST_ALL_PRODUCTS = 12;
     private static final int SAVE = 13;
     private static final int HELP = 14;
+    
+    //Keith Added
+	private Scanner scan = new Scanner(System.in);
 
 	public static void main(String[] args) {
 		UserInterface.instance().mainMenu();
@@ -188,12 +193,18 @@ public class UserInterface {
     
     private void addProduct() {
     	// Update input details.
-    	String name = null;
-    	String id = "1";
-    	int reorderLevel = 10;
-    	int priceDollars = 0;
-    	int priceCents = 0;
-    	System.out.println(store.addProduct(id, name, reorderLevel,priceDollars,priceCents));
+    	System.out.println("Enter the ID of the product");
+    	String id = scan.next();
+    	System.out.println("Enter the name of the product");
+    	String name = scan.next();
+    	System.out.println("Enter the price of the product");
+    	double price = scan.nextDouble();
+    	System.out.println("Enter the current inventory");
+    	int inventory = scan.nextInt();
+    	System.out.println("Enter the reorder threshold");
+    	int reorder = scan.nextInt();
+
+    	System.out.println(store.addProduct(id, name, price, inventory, reorder));
     }
     
     private void checkout() {
@@ -225,7 +236,7 @@ public class UserInterface {
     private void retrieveMemberInfo() {
     	// Update input details.
     	int memberId = 123456;
-    	System.out.println(store.retrieveMemberInfo(memberString));
+//    	System.out.println(store.retrieveMemberInfo(memberString));
     }
     
     private void printTransactions() {
