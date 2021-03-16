@@ -189,11 +189,11 @@ public class UserInterface {
     private void addProduct() {
     	// Update input details.
     	String name = null;
+    	String id = "1";
     	int reorderLevel = 10;
     	int priceDollars = 0;
     	int priceCents = 0;
-    	System.out.println(store.addProduct(name,reorderLevel,priceDollars,
-    	priceCents));
+    	System.out.println(store.addProduct(id, name, reorderLevel,priceDollars,priceCents));
     }
     
     private void checkout() {
