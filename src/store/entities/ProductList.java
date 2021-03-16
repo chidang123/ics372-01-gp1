@@ -26,6 +26,7 @@ public class ProductList implements Serializable {
 			Product product = iterator.next();
 			if (product.getId().equals(id)) {
 				product.setInventory(product.getReorderThreshold() * 2); // can't remember is its * 2 all the time of or just first time
+				System.out.println("Product [id=" + product.getID() + ", name=" + product.getName() + ", price=" + product.getPrice() + ", inventory=" + inventory);
 				break; // breaking loop and function - no longer needs it since item found
 			}
 		}

@@ -59,8 +59,8 @@ public class Store {
     	return "Product details for " + productId;
     }
     
-    public String retrieveMemberInfo(int memberId) {
-    	return "Product details for " + memberId;
+    public String retrieveMemberInfo(String memberString) {
+    	return "Member details for " + memberString;
     }
     
     public String printTransactions(int memberId) {

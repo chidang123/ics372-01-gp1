@@ -25,6 +25,22 @@ public class MemberList implements Serializable {
 		}
 		return null;
 	}
+	
+	/**
+	 * Displays all members starting with a given String
+	 * @param memberString the beginning of a member's name
+	 * @return display of all members starting with the string
+	 */
+    public String retrieveMemberInfo(String memberString) {
+    	String memberDisplay = 'Members: \n';
+    	for(Iterator<Member> iterator = members.iterator(); iterator.hasNext();) {
+    		Member member = iterator.next();
+    		if(member.getName().startsWith(memberString)) {
+    			memberDisplay += member.toString() + '\n';
+    		}
+    	}
+    	return memberDisplay;
+    }
 
 	/**
 	 * Inserts a member into the collection
@@ -46,6 +62,19 @@ public class MemberList implements Serializable {
 	public Iterator<Member> iterator() {
 		return members.iterator();
 	}
+	/**
+	 * Displays all members starting with a given String
+	 * @param memberString the beginning of a member's name
+	 * @return display of all members starting with the string
+	 */
+    public String listAllMembers() {
+    	String memberDisplay = 'All Members: \n';
+    	for(Iterator<Member> iterator = members.iterator(); iterator.hasNext();) {
+    		Member member = iterator.next();
+    		memberDisplay += member.toString() + '\n';
+    	}
+    	return memberDisplay;
+    }
 
 	/**
 	 * String form of the collection
