@@ -225,7 +225,7 @@ public class UserInterface {
     private void retrieveMemberInfo() {
     	// Update input details.
     	int memberId = 123456;
-    	System.out.println(store.retrieveMemberInfo(memberId));
+    	System.out.println(store.retrieveMemberInfo(memberString));
     }
     
     private void printTransactions() {
