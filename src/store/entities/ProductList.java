@@ -11,47 +11,47 @@ import java.io.Serializable;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+//import java.util.Scanner;  
 
 //Took code from Andrew's Member List java file
 
 public class ProductList implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private List<Product> products = new LinkedList<Product>();
+//	private Scanner scan = new Scanner(System.in);
 
-	public void addProduct(int id) {
+	// business case 5
+	public void addExisitingProduct(String id) {
 		for (Iterator<Product> iterator = products.iterator(); iterator.hasNext();) {
 			Product product = iterator.next();
-			if (product.getId() == id) {
-				product.setInventory(product.getReorderThreshold() * 2); // can't remember is its * 2 all the time of
-																			// just first time
+			if (product.getId().equals(id)) {
+				product.setInventory(product.getReorderThreshold() * 2); // can't remember is its * 2 all the time of or just first time
 				break; // breaking loop and function - no longer needs it since item found
 			}
 		}
+	}
 
-		// sloppy now - in rush to finish this by tonight
-		// create input (either here or in new function) to create new constructor and
-		// add product into list
-//		Product newProduct = new Product();
-
-		// products.add(newProduct);
-
+	// business case 3	
+	public boolean addNewProduct(Product product) {
+		products.add(product);
+		return true;
 	}
 
 	// business case 7
-	public void showProductInfo(int id) {
+	public void showProductInfo(String id) {
 		for (Iterator<Product> iterator = products.iterator(); iterator.hasNext();) {
 			Product product = iterator.next();
-			if (product.getId() == id) {
+			if (product.getId().equals(id)) {
 				product.toString();
 			}
 		}
 	}
 
 	// business case 6
-	public void changePrice(int id, double newPrice) {
+	public void changePrice(String id, double newPrice) {
 		for (Iterator<Product> iterator = products.iterator(); iterator.hasNext();) {
 			Product product = iterator.next();
-			if (product.getId() == id) {
+			if (product.getId().equals(id)) {
 				product.setPrice(newPrice);
 			}
 		}
@@ -71,25 +71,4 @@ public class ProductList implements Serializable {
 	public String toString() {
 		return products.toString();
 	}
-
-	// Change from business case 6 to house every aspect of product that can be
-	// Can be discarded since he is not asking for this in assignment
-	// changed
-//	public void changeProduct(int id, String choice) {
-//		for (Iterator<Product> iterator = products.iterator(); iterator.hasNext();) {
-//			Product product = iterator.next();
-//			if (product.getId() == id) {
-//				switch(choice) {
-//					case "name":
-//						product.setName(choice);
-//						break;
-//					case "price":
-//						product.setPrice(choice);
-//						break;
-//				}
-//
-//			}
-//		}
-//	}
-
 }

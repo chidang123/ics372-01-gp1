@@ -35,8 +35,9 @@ public class Store {
     	System.out.println("Remove Member: " + memberId);
     }
     
-    public int addProduct(String name, int reorderLevel,int priceDollars,
-    int priceCents) {
+    public int addProduct(String id, String name, double price, int inventory, int reorderThreshold) {
+//    	ProductList pList = new ProductList();
+//    	pList.addNeProduct(id);
     	int productId = 123456;
     	return productId;
     }
