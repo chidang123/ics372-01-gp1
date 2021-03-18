@@ -5,7 +5,7 @@ import java.util.Iterator;
 
 public class Store {
 	private static Store store;
-	OrderList pList = new OrderList();
+	ProductList pList = new ProductList();
 	OrderList orderList = new OrderList();
 	
     /**
@@ -41,9 +41,9 @@ public class Store {
     	System.out.println("Remove Member: " + memberId);
     }
     
-    public Order addOrder(String id, String name, double price, int inventory, int reorderThreshold) {
-    	Order product = new Order(id, name, price, inventory, reorderThreshold);
-    	pList.addNewOrder(product);    	
+    public Product addProduct(String id, String name, double price, int inventory, int reorderThreshold) {
+    	Product product = new Product(id, name, price, inventory, reorderThreshold);
+    	pList.addNewProduct(product);    	
     	return product;
     }
     
@@ -60,8 +60,8 @@ public class Store {
     	+ priceDollars + "." + priceCents + ".";
     }
     
-    public String retrieveOrderInfo(int productId) {
-    	return "Order details for " + productId;
+    public String retrieveProductInfo(int productId) {
+    	return "Product details for " + productId;
     }
     
     public String retrieveMemberInfo(String memberString) {
@@ -93,7 +93,7 @@ public class Store {
     	return "Here are all the members.";
     }
     
-    public String listAllOrders() {
+    public String listAllProducts() {
     	StringBuilder buffer = new StringBuilder();
     	buffer.append("name,id,onhand,price,reorder\n");
         for (Iterator<Order> iterator = pList.iterator(); iterator.hasNext();) {
