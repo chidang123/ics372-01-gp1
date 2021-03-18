@@ -1,17 +1,19 @@
 package store.entities;
 import java.util.Date;
 import java.util.Hashtable;
+import java.util.Iterator;
 
 public class Store {
 	private static Store store;
+	ProductList pList = new ProductList();
+	OrderList orderList = new OrderList();
 	
     /**
      * Private for the singleton pattern Creates the catalog and member collection
      * objects
      */
 	
-	//Keith Added
-	ProductList pList = new ProductList();
+
 	
     private Store() {
     }
@@ -71,7 +73,20 @@ public class Store {
     }
     
     public String listOutstandingOrders() {
-    	return "Here are your orders.";
+    	StringBuilder buffer = new StringBuilder();
+    	buffer.append("id,product,date,qty\n");
+        for (Iterator<Order> iterator = pList.iterator(); iterator.hasNext();) {
+            Order order = (Order) iterator.next();
+            	buffer.append(order.getId());
+            	buffer.append(",");
+            	buffer.append(order.getProduct().getName());
+            	buffer.append(",");
+            	buffer.append(order.getDate().toString());
+            	buffer.append(",");
+            	buffer.append(Integer.toString(order.getNewStock()));
+            	buffer.append("\n");
+        }
+    	return buffer.toString();
     }
     
     public String listAllMembers() {
@@ -79,7 +94,22 @@ public class Store {
     }
     
     public String listAllProducts() {
-    	return "Here are all the products.";
+    	StringBuilder buffer = new StringBuilder();
+    	buffer.append("name,id,onhand,price,reorder\n");
+        for (Iterator<Order> iterator = pList.iterator(); iterator.hasNext();) {
+            Order product = (Order) iterator.next();
+            	buffer.append(product.getName());
+            	buffer.append(",");
+            	buffer.append(product.getId());
+            	buffer.append(",");
+            	buffer.append(Integer.toString(product.getInventory()));
+            	buffer.append(",");
+            	buffer.append(Double.toString(product.getPrice()));
+            	buffer.append(",");
+            	buffer.append(Integer.toString(product.getReorderThreshold()));
+            	buffer.append("\n");
+        }
+    	return buffer.toString();
     }
     
     public void save() {
