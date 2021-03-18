@@ -1,6 +1,7 @@
 package store.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class Order implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -9,11 +10,13 @@ public class Order implements Serializable {
 	private int newStock;
 	private static final String ORDER_STRING = "OR";
 	private static int idCounter;
+	private Date date;
 
 	public Order(Product product) {
 		this.product = product;
 		newStock = 2 * product.getReorderThreshold();
 		id = ORDER_STRING + ++idCounter;
+		date = new Date();
 	}
 
 	public String getId() {
@@ -27,6 +30,12 @@ public class Order implements Serializable {
 	public int getNewStock() {
 		return newStock;
 	}
+	
+	public Date getDate() {
+		return date;
+	}
+	
+	
 
 	/**
 	 * String form of the member

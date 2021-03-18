@@ -1,17 +1,19 @@
 package store.entities;
 import java.util.Date;
 import java.util.Hashtable;
+import java.util.Iterator;
 
 public class Store {
 	private static Store store;
+	OrderList pList = new OrderList();
+	OrderList orderList = new OrderList();
 	
     /**
      * Private for the singleton pattern Creates the catalog and member collection
      * objects
      */
 	
-	//Keith Added
-	ProductList pList = new ProductList();
+
 	
     private Store() {
     }
@@ -39,9 +41,9 @@ public class Store {
     	System.out.println("Remove Member: " + memberId);
     }
     
-    public Product addProduct(String id, String name, double price, int inventory, int reorderThreshold) {
-    	Product product = new Product(id, name, price, inventory, reorderThreshold);
-    	pList.addNewProduct(product);    	
+    public Order addOrder(String id, String name, double price, int inventory, int reorderThreshold) {
+    	Order product = new Order(id, name, price, inventory, reorderThreshold);
+    	pList.addNewOrder(product);    	
     	return product;
     }
     
@@ -58,8 +60,8 @@ public class Store {
     	+ priceDollars + "." + priceCents + ".";
     }
     
-    public String retrieveProductInfo(int productId) {
-    	return "Product details for " + productId;
+    public String retrieveOrderInfo(int productId) {
+    	return "Order details for " + productId;
     }
     
     public String retrieveMemberInfo(String memberString) {
@@ -71,15 +73,43 @@ public class Store {
     }
     
     public String listOutstandingOrders() {
-    	return "Here are your orders.";
+    	StringBuilder buffer = new StringBuilder();
+    	buffer.append("id,product,date,qty\n");
+        for (Iterator<Order> iterator = pList.iterator(); iterator.hasNext();) {
+            Order order = (Order) iterator.next();
+            	buffer.append(order.getId());
+            	buffer.append(",");
+            	buffer.append(order.getProduct().getName());
+            	buffer.append(",");
+            	buffer.append(order.getDate().toString());
+            	buffer.append(",");
+            	buffer.append(Integer.toString(order.getNewStock()));
+            	buffer.append("\n");
+        }
+    	return buffer.toString();
     }
     
     public String listAllMembers() {
     	return "Here are all the members.";
     }
     
-    public String listAllProducts() {
-    	return "Here are all the products.";
+    public String listAllOrders() {
+    	StringBuilder buffer = new StringBuilder();
+    	buffer.append("name,id,onhand,price,reorder\n");
+        for (Iterator<Order> iterator = pList.iterator(); iterator.hasNext();) {
+            Order product = (Order) iterator.next();
+            	buffer.append(product.getName());
+            	buffer.append(",");
+            	buffer.append(product.getId());
+            	buffer.append(",");
+            	buffer.append(Integer.toString(product.getInventory()));
+            	buffer.append(",");
+            	buffer.append(Double.toString(product.getPrice()));
+            	buffer.append(",");
+            	buffer.append(Integer.toString(product.getReorderThreshold()));
+            	buffer.append("\n");
+        }
+    	return buffer.toString();
     }
     
     public void save() {
