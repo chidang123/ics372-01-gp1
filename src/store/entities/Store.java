@@ -79,7 +79,7 @@ public class Store {
 	public String listOutstandingOrders() {
 		StringBuilder buffer = new StringBuilder();
 		buffer.append("id,product,date,qty\n");
-		for (Iterator<Order> iterator = pList.iterator(); iterator.hasNext();) {
+		for (Iterator<Order> iterator = orderList.iterator(); iterator.hasNext();) {
 			Order order = (Order) iterator.next();
 			buffer.append(order.getId());
 			buffer.append(",");
@@ -100,8 +100,8 @@ public class Store {
 	public String listAllProducts() {
 		StringBuilder buffer = new StringBuilder();
 		buffer.append("name,id,onhand,price,reorder\n");
-		for (Iterator<Order> iterator = pList.iterator(); iterator.hasNext();) {
-			Order product = (Order) iterator.next();
+		for (Iterator<Product> iterator = pList.iterator(); iterator.hasNext();) {
+			Product product = (Product) iterator.next();
 			buffer.append(product.getName());
 			buffer.append(",");
 			buffer.append(product.getId());
