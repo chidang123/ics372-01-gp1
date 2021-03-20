@@ -5,9 +5,9 @@ import java.util.Iterator;
 
 public class Store {
 	private static Store store;
-	MemberList mList = new MemberList();
-	ProductList pList = new ProductList();
-	OrderList orderList = new OrderList();
+	private static MemberList memberList = new MemberList();
+	private static ProductList productList = new ProductList();
+	private static OrderList orderList = new OrderList();
 
 	/**
 	 * Private for the singleton pattern Creates the catalog and member collection
@@ -30,25 +30,25 @@ public class Store {
 		}
 	}
 
-	public String enrollMember(String name, String address, String phoneNumber) {
+	public static String enrollMember(String name, String address, String phoneNumber) {
 		Member member = new Member(name, address, phoneNumber);
-		mList.insertMember(member);
+		memberList.insertMember(member);
 		return member.toString();
 	}
 
 	public void removeMember(String memberId) {
-		Member member = mList.search(memberId);
+		Member member = memberList.search(memberId);
 		if (member != null) {
-			mList.removeMember(member);
+			memberList.removeMember(member);
 			System.out.println("Member was removed from the system.");
 		} else {
 			System.out.println("There is no member with the Id: " + memberId);
 		}
 	}
 
-	public Product addProduct(String id, String name, double price, int inventory, int reorderThreshold) {
+	public static Product addProduct(String id, String name, double price, int inventory, int reorderThreshold) {
 		Product product = new Product(id, name, price, inventory, reorderThreshold);
-		pList.addNewProduct(product);
+		productList.addNewProduct(product);
 		return product;
 	}
 
@@ -56,8 +56,18 @@ public class Store {
 		return "Checkout Output.";
 	}
 
-	public String processShipment(Hashtable<String, Integer> shipment) {
-		return "Process Output.";
+	/**
+	 * Processes items in the order
+	 * 
+	 * @param orderId
+	 */
+	public static void processShipment(String orderId) {
+		System.out.println(orderList.search(orderId));
+		if (orderList.search(orderId) != null) {
+			Product updatedProduct = orderList.search(orderId).getProduct();
+			productList.addExisitingProduct(updatedProduct.getId());
+		}
+
 	}
 
 	public String changePrice(int productId, int priceDollars, int priceCents) {
@@ -68,8 +78,21 @@ public class Store {
 		return "Product details for " + productId;
 	}
 
-	public String retrieveMemberInfo(String memberString) {
-		return "Member details for " + memberString;
+	/**
+	 * Displays all members starting with a given String
+	 * 
+	 * @param memberString the beginning of a member's name
+	 * @return display of all members starting with the string
+	 */
+	public static void retrieveMemberInfo(String memberString) {
+		String memberDisplay = "Members Beginning with " + memberString + ":\n";
+		for (Iterator<Member> iterator = memberList.iterator(); iterator.hasNext();) {
+			Member member = iterator.next();
+			if (member.getName().startsWith(memberString)) {
+				memberDisplay += member.toString() + "\n";
+			}
+		}
+		System.out.println(memberDisplay);
 	}
 
 	public String printTransactions(int memberId) {
@@ -93,14 +116,14 @@ public class Store {
 		return buffer.toString();
 	}
 
-	public String listAllMembers() {
-		return "Here are all the members.";
+	public static void listAllMembers() {
+		System.out.println(memberList.toString());
 	}
 
 	public String listAllProducts() {
 		StringBuilder buffer = new StringBuilder();
 		buffer.append("name,id,onhand,price,reorder\n");
-		for (Iterator<Product> iterator = pList.iterator(); iterator.hasNext();) {
+		for (Iterator<Product> iterator = productList.iterator(); iterator.hasNext();) {
 			Product product = (Product) iterator.next();
 			buffer.append(product.getName());
 			buffer.append(",");

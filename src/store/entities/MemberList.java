@@ -69,7 +69,7 @@ public class MemberList implements Serializable {
 		String memberDisplay = "All Members: \n";
 		for (Iterator<Member> iterator = members.iterator(); iterator.hasNext();) {
 			Member member = iterator.next();
-			memberDisplay += member.toString() + '\n';
+			memberDisplay += member.toString() + "\n";
 		}
 		return memberDisplay;
 	}
