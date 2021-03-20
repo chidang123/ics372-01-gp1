@@ -64,6 +64,24 @@ public class OrderList implements Iterable<Order>, Serializable {
 		return null;
 	}
 
+	/**
+	 * Checks whether an order with a given order id exists.
+	 * 
+	 * @param orderId the id of the order
+	 * @return a reference to the Order if orderId is valid, otherwise it return
+	 *         false
+	 * 
+	 */
+	public Order search(String orderId) {
+		for (Iterator<Order> iterator = orders.iterator(); iterator.hasNext();) {
+			Order order = iterator.next();
+			if (order.getId().equals(orderId)) {
+				return order;
+			}
+		}
+		return null;
+	}
+
 	@Override
 	public Iterator<Order> iterator() {
 		return orders.iterator();
