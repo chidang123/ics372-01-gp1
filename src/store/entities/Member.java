@@ -134,7 +134,8 @@ public class Member implements Serializable {
 	@Override
 	public String toString() {
 		String string = "Id: " + id + ", member name: " + name + ", address: " + address + ", date joined: "
-				+ dateJoined + ", phone number: " + phoneNumber;
+				+ dateJoined.get(Calendar.MONTH) + "/" + dateJoined.get(Calendar.DATE) + "/"
+				+ dateJoined.get(Calendar.YEAR) + ", phone number: " + phoneNumber;
 
 		return string;
 	}
