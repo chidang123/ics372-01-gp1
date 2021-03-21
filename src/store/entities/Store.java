@@ -3,11 +3,12 @@ package store.entities;
 import java.util.Hashtable;
 import java.util.Iterator;
 
+//Change
 public class Store {
 	private static Store store;
-	private static MemberList memberList = new MemberList();
-	private static ProductList productList = new ProductList();
-	private static OrderList orderList = new OrderList();
+	private MemberList memberList = new MemberList();
+	private ProductList productList = new ProductList();
+	private OrderList orderList = new OrderList();
 
 	/**
 	 * Private for the singleton pattern Creates the catalog and member collection
@@ -30,23 +31,23 @@ public class Store {
 		}
 	}
 
-	public static String enrollMember(String name, String address, String phoneNumber) {
+	public String enrollMember(String name, String address, String phoneNumber) {
 		Member member = new Member(name, address, phoneNumber);
 		memberList.insertMember(member);
 		return member.toString();
 	}
 
-	public void removeMember(String memberId) {
+	public boolean removeMember(String memberId) {
 		Member member = memberList.search(memberId);
 		if (member != null) {
 			memberList.removeMember(member);
-			System.out.println("Member was removed from the system.");
+			return true;
 		} else {
-			System.out.println("There is no member with the Id: " + memberId);
+			return false;
 		}
 	}
 
-	public static Product addProduct(String id, String name, double price, int inventory, int reorderThreshold) {
+	public Product addProduct(String id, String name, double price, int inventory, int reorderThreshold) {
 		Product product = new Product(id, name, price, inventory, reorderThreshold);
 		productList.addNewProduct(product);
 		return product;
@@ -61,7 +62,7 @@ public class Store {
 	 * 
 	 * @param orderId
 	 */
-	public static void processShipment(String orderId) {
+	public void processShipment(String orderId) {
 		System.out.println(orderList.search(orderId));
 		if (orderList.search(orderId) != null) {
 			Product updatedProduct = orderList.search(orderId).getProduct();
@@ -84,7 +85,7 @@ public class Store {
 	 * @param memberString the beginning of a member's name
 	 * @return display of all members starting with the string
 	 */
-	public static void retrieveMemberInfo(String memberString) {
+	public void retrieveMemberInfo(String memberString) {
 		String memberDisplay = "Members Beginning with " + memberString + ":\n";
 		for (Iterator<Member> iterator = memberList.iterator(); iterator.hasNext();) {
 			Member member = iterator.next();
@@ -116,7 +117,7 @@ public class Store {
 		return buffer.toString();
 	}
 
-	public static void listAllMembers() {
+	public void listAllMembers() {
 		System.out.println(memberList.toString());
 	}
 

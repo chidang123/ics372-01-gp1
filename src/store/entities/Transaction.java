@@ -1,33 +1,26 @@
 package store.entities;
 
+//Change//Change
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+import java.util.Date;
 
 public class Transaction implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private Calendar date;
+	private Date date;
 	private int memberID;
 	private int transactionID;
 	private static int idCounter;
-	private ArrayList<Product> list = new ArrayList<Product>();
+	private ProductList productList = new ProductList();;
 
 	public Transaction(int memberID) {
-		this.date = new GregorianCalendar();
+		this.date = new Date();
 		this.memberID = memberID;
 		this.transactionID = idCounter;
 		idCounter++;
 	}
 
-	public boolean onDate(Calendar date) {
-		return ((date.get(Calendar.YEAR) == this.date.get(Calendar.YEAR))
-				&& (date.get(Calendar.MONTH) == this.date.get(Calendar.MONTH))
-				&& (date.get(Calendar.DATE) == this.date.get(Calendar.DATE)));
-	}
-
-	public String getDate() {
-		return date.get(Calendar.MONTH) + "/" + date.get(Calendar.DATE) + "/" + date.get(Calendar.YEAR);
+	public Date getDate() {
+		return date;
 	}
 
 	public int getMemberID() {
@@ -38,15 +31,7 @@ public class Transaction implements Serializable {
 		return transactionID;
 	}
 
-	public void setDate(Calendar date) {
-		this.date = date;
-	}
-
-	public void setMemberID(int memberID) {
-		this.memberID = memberID;
-	}
-
-	public void setTransactionID(int transactionID) {
-		this.transactionID = transactionID;
+	public void addProduct(Product product) {
+		productList.addNewProduct(product);
 	}
 }

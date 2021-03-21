@@ -5,6 +5,7 @@
  * 
  */
 
+//Change
 package store.entities;
 
 import java.io.Serializable;
@@ -24,10 +25,6 @@ public class Product implements Serializable {
 		this.price = price;
 		this.inventory = inventory;
 		this.reorderThreshold = reorderThreshold;
-	}
-
-	public Product() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public String getId() {
