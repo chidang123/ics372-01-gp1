@@ -220,9 +220,15 @@ public class UserInterface {
 	}
 
 	private void processShipment() {
-		// Update input details.
-		Hashtable<String, Integer> shipment = new Hashtable<String, Integer>();
-		System.out.println(store.processShipment(shipment));
+		System.out.println("Enter the ID of the order");
+		String orderId = scan.next();
+		System.out.println("Do you have more products to enter?");
+		String moreShipments = scan.next();
+		while (moreShipments.equals("yes")) {
+			System.out.println("Enter the ID of the order");
+			orderId = scan.next();
+			System.out.println(store.processShipment(orderId));
+		}
 	}
 
 	private void changePrice() {
@@ -239,10 +245,16 @@ public class UserInterface {
 		System.out.println(store.retrieveProductInfo(productId));
 	}
 
-	private void retrieveMemberInfo() {
-		// Update input details.
-		int memberId = 123456;
-//    	System.out.println(store.retrieveMemberInfo(memberString));
+	/**
+	 * Displays all members starting with a given String
+	 * 
+	 * @param memberString the beginning of a member's name
+	 * @return display of all members starting with the string
+	 */
+	public void retrieveMemberInfo() {
+		System.out.println("Enter the  beginning of a member's name");
+		String memberString = scan.next();
+		System.out.println(store.retrieveMemberInfo(memberString));
 	}
 
 	private void printTransactions() {
@@ -255,15 +267,27 @@ public class UserInterface {
 		System.out.println(store.listOutstandingOrders());
 	}
 
-	private void listAllMembers() {
-		System.out.println(store.listAllMembers());
+	/**
+	 * Displays all members
+	 */
+	public void listAllMembers() {
+		store.listAllMembers();
 	}
 
 	private void listAllProducts() {
 		System.out.println(store.listAllProducts());
 	}
 
+	/**
+	 * Method to be called for saving the Library object. Uses the appropriate
+	 * Library method for saving.
+	 * 
+	 */
 	private void save() {
-		store.save();
+		if (Store.save()) {
+			System.out.println(" The library has been successfully saved in the file LibraryData \n");
+		} else {
+			System.out.println(" There has been an error in saving \n");
+		}
 	}
 }
