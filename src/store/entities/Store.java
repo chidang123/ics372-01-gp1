@@ -2,7 +2,7 @@ package store.entities;
 
 import java.util.Hashtable;
 import java.util.Iterator;
-
+//Change
 public class Store {
 	private static Store store;
 	private static MemberList memberList = new MemberList();
