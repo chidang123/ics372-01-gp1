@@ -84,6 +84,23 @@ public class Store {
 		return "Product details for " + productId;
 	}
 
+	/**
+	 * Displays all members starting with a given String
+	 * 
+	 * @param memberString the beginning of a member's name
+	 * @return display of all members starting with the string
+	 */
+	public String retrieveMemberInfo(String memberString) {
+		String memberDisplay = "Members Beginning with " + memberString + ":\n";
+		for (Iterator<Member> iterator = memberList.iterator(); iterator.hasNext();) {
+			Member member = iterator.next();
+			if (member.getName().startsWith(memberString)) {
+				memberDisplay += member.toString() + "\n";
+			}
+		}
+		return memberDisplay;
+	}
+
 	public String printTransactions(int memberId) {
 		return "Transactions for " + memberId;
 	}
@@ -122,6 +139,19 @@ public class Store {
 			buffer.append("\n");
 		}
 		return buffer.toString();
+	}
+
+	/**
+	 * Displays all members
+	 */
+	public String listAllMembers() {
+		Iterator<Member> iterator = memberList.iterator();
+		String memberDisplay = "List of members (name, address, phone, id)";
+		while (iterator.hasNext()) {
+			Member member = iterator.next();
+			memberDisplay += member.toString() + "\n";
+		}
+		return memberDisplay;
 	}
 
 	/**

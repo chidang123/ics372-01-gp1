@@ -4,11 +4,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
-import store.entities.Member;
 import store.entities.Store;
 
 public class UserInterface {
@@ -253,15 +251,10 @@ public class UserInterface {
 	 * @param memberString the beginning of a member's name
 	 * @return display of all members starting with the string
 	 */
-	public void retrieveMemberInfo(String memberString) {
-		String memberDisplay = "Members Beginning with " + memberString + ":\n";
-		for (Iterator<Member> iterator = memberList.iterator(); iterator.hasNext();) {
-			Member member = iterator.next();
-			if (member.getName().startsWith(memberString)) {
-				memberDisplay += member.toString() + "\n";
-			}
-		}
-		System.out.println(memberDisplay);
+	public void retrieveMemberInfo() {
+		System.out.println("Enter the  beginning of a member's name");
+		String memberString = scan.next();
+		System.out.println(store.retrieveMemberInfo(memberString));
 	}
 
 	private void printTransactions() {
@@ -278,13 +271,7 @@ public class UserInterface {
 	 * Displays all members
 	 */
 	public void listAllMembers() {
-		Iterator<Member> iterator = store.listAllMembers();
-		System.out.println("List of members (name, address, phone, id)");
-		while (iterator.hasNext()) {
-			Member member = iterator.next();
-			System.out.println(member.toString());
-		}
-		System.out.println("End of listing");
+		store.listAllMembers();
 	}
 
 	private void listAllProducts() {
@@ -297,7 +284,7 @@ public class UserInterface {
 	 * 
 	 */
 	private void save() {
-		if (store.save()) {
+		if (Store.save()) {
 			System.out.println(" The library has been successfully saved in the file LibraryData \n");
 		} else {
 			System.out.println(" There has been an error in saving \n");
