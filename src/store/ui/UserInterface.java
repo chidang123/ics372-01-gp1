@@ -189,7 +189,12 @@ public class UserInterface {
 	private void removeMember() {
 		System.out.println("Enter the member's Id: ");
 		String memberId = scan.next();
-		store.removeMember(memberId);
+		boolean removeOrNot = store.removeMember(memberId);
+		if (removeOrNot) {
+			System.out.println("Member was removed from the system.");
+		} else {
+			System.out.println("There is no member with the Id: " + memberId);
+		}
 	}
 
 	private void addProduct() {

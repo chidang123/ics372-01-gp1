@@ -1,9 +1,14 @@
 package store.entities;
+
 //Change
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.ListIterator;
 
 /**
  * Member represents a member of the store
@@ -20,7 +25,7 @@ public class Member implements Serializable {
 	private String phoneNumber;
 	private static final String MEMBER_STRING = "XM";
 	private static int idCounter;
-	private TransactionList membersTransactions = new TransactionList();
+	private List<Transaction> transactions = new LinkedList<Transaction>();
 
 	/**
 	 * Creates a single member
@@ -115,7 +120,19 @@ public class Member implements Serializable {
 	 * @param transaction
 	 */
 	public void addMemberTransaction(Transaction transaction) {
-		membersTransactions.addTransaction(transaction);
+		transactions.add(transaction);
+	}
+
+	public String getTransactionInfo(Date startDate, Date endDate) {
+		String result = name + "'s transactions\n";
+		for (ListIterator<Transaction> iterator = transactions.listIterator(); iterator.hasNext();) {
+			Transaction transaction = iterator.next();
+			if ((transaction.getDate().equals(startDate) || transaction.getDate().after(startDate))
+					&& (transaction.getDate().equals(endDate) || transaction.getDate().before(endDate))) {
+				result = "Transaction ID: " + transaction.getTransactionID() + "/nDate: " + transaction.getDate();
+			}
+		}
+		return result;
 	}
 
 	/**
@@ -124,7 +141,7 @@ public class Member implements Serializable {
 	 * @return
 	 */
 	public Iterator<Transaction> iterator() {
-		return membersTransactions.iterator();
+		return transactions.iterator();
 	}
 
 	/**

@@ -27,10 +27,6 @@ public class Product implements Serializable {
 		this.reorderThreshold = reorderThreshold;
 	}
 
-	public Product() {
-		// TODO Auto-generated constructor stub
-	}
-
 	public String getId() {
 		return id;
 	}
