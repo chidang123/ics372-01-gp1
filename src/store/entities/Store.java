@@ -1,5 +1,8 @@
 package store.entities;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.Hashtable;
 import java.util.Iterator;
 
@@ -62,12 +65,14 @@ public class Store {
 	 * 
 	 * @param orderId
 	 */
-	public void processShipment(String orderId) {
-		System.out.println(orderList.search(orderId));
-		if (orderList.search(orderId) != null) {
-			Product updatedProduct = orderList.search(orderId).getProduct();
-			productList.addExisitingProduct(updatedProduct.getId());
+	public String processShipment(String orderId) {
+		if (store.orderList.search(orderId) != null) {
+			Product updatedProduct = store.orderList.search(orderId).getProduct();
+			store.productList.addExisitingProduct(updatedProduct.getId());
+			store.orderList.removeOrder(orderId);
+			return updatedProduct.toString();
 		}
+		return null;
 
 	}
 
@@ -77,23 +82,6 @@ public class Store {
 
 	public String retrieveProductInfo(int productId) {
 		return "Product details for " + productId;
-	}
-
-	/**
-	 * Displays all members starting with a given String
-	 * 
-	 * @param memberString the beginning of a member's name
-	 * @return display of all members starting with the string
-	 */
-	public void retrieveMemberInfo(String memberString) {
-		String memberDisplay = "Members Beginning with " + memberString + ":\n";
-		for (Iterator<Member> iterator = memberList.iterator(); iterator.hasNext();) {
-			Member member = iterator.next();
-			if (member.getName().startsWith(memberString)) {
-				memberDisplay += member.toString() + "\n";
-			}
-		}
-		System.out.println(memberDisplay);
 	}
 
 	public String printTransactions(int memberId) {
@@ -117,10 +105,6 @@ public class Store {
 		return buffer.toString();
 	}
 
-	public void listAllMembers() {
-		System.out.println(memberList.toString());
-	}
-
 	public String listAllProducts() {
 		StringBuilder buffer = new StringBuilder();
 		buffer.append("name,id,onhand,price,reorder\n");
@@ -140,7 +124,26 @@ public class Store {
 		return buffer.toString();
 	}
 
-	public void save() {
-		System.out.println("Save.");
+	/**
+	 * Serializes the Store object
+	 * 
+	 * @return true iff the data could be saved
+	 */
+	public static boolean save() {
+		try {
+			FileOutputStream file = new FileOutputStream("StoreData");
+			ObjectOutputStream output = new ObjectOutputStream(file);
+			output.writeObject(store);
+			Member.save(output);
+			file.close();
+			return true;
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+			return false;
+		}
+	}
+
+	public Iterator<Member> iterator() {
+		return memberList.iterator();
 	}
 }

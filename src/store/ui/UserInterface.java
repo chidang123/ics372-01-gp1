@@ -4,9 +4,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
+import store.entities.Member;
 import store.entities.Store;
 
 public class UserInterface {
@@ -220,9 +222,15 @@ public class UserInterface {
 	}
 
 	private void processShipment() {
-		// Update input details.
-		Hashtable<String, Integer> shipment = new Hashtable<String, Integer>();
-		System.out.println(store.processShipment(shipment));
+		System.out.println("Enter the ID of the order");
+		String orderId = scan.next();
+		System.out.println("Do you have more products to enter?");
+		String moreShipments = scan.next();
+		while (moreShipments.equals("yes")) {
+			System.out.println("Enter the ID of the order");
+			orderId = scan.next();
+			System.out.println(store.processShipment(orderId));
+		}
 	}
 
 	private void changePrice() {
@@ -239,10 +247,21 @@ public class UserInterface {
 		System.out.println(store.retrieveProductInfo(productId));
 	}
 
-	private void retrieveMemberInfo() {
-		// Update input details.
-		int memberId = 123456;
-//    	System.out.println(store.retrieveMemberInfo(memberString));
+	/**
+	 * Displays all members starting with a given String
+	 * 
+	 * @param memberString the beginning of a member's name
+	 * @return display of all members starting with the string
+	 */
+	public void retrieveMemberInfo(String memberString) {
+		String memberDisplay = "Members Beginning with " + memberString + ":\n";
+		for (Iterator<Member> iterator = memberList.iterator(); iterator.hasNext();) {
+			Member member = iterator.next();
+			if (member.getName().startsWith(memberString)) {
+				memberDisplay += member.toString() + "\n";
+			}
+		}
+		System.out.println(memberDisplay);
 	}
 
 	private void printTransactions() {
@@ -255,15 +274,33 @@ public class UserInterface {
 		System.out.println(store.listOutstandingOrders());
 	}
 
-	private void listAllMembers() {
-		System.out.println(store.listAllMembers());
+	/**
+	 * Displays all members
+	 */
+	public void listAllMembers() {
+		Iterator<Member> iterator = store.listAllMembers();
+		System.out.println("List of members (name, address, phone, id)");
+		while (iterator.hasNext()) {
+			Member member = iterator.next();
+			System.out.println(member.toString());
+		}
+		System.out.println("End of listing");
 	}
 
 	private void listAllProducts() {
 		System.out.println(store.listAllProducts());
 	}
 
+	/**
+	 * Method to be called for saving the Library object. Uses the appropriate
+	 * Library method for saving.
+	 * 
+	 */
 	private void save() {
-		store.save();
+		if (store.save()) {
+			System.out.println(" The library has been successfully saved in the file LibraryData \n");
+		} else {
+			System.out.println(" There has been an error in saving \n");
+		}
 	}
 }
