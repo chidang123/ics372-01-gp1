@@ -14,16 +14,13 @@ public class Store {
 	private OrderList orderList = new OrderList();
 
 	/**
-	 * Private for the singleton pattern Creates the catalog and member collection
-	 * objects
+	 * private constructor for singleton pattern
 	 */
 
 	private Store() {
 	}
 
 	/**
-	 * Supports the singleton pattern
-	 * 
 	 * @return the singleton object
 	 */
 	public static Store instance() {
@@ -40,8 +37,8 @@ public class Store {
 		return member.toString();
 	}
 
-	public boolean removeMember(String memberId) {
-		Member member = memberList.search(memberId);
+	public boolean removeMember(String memberID) {
+		Member member = memberList.search(memberID);
 		if (member != null) {
 			memberList.removeMember(member);
 			return true;
@@ -61,34 +58,29 @@ public class Store {
 	}
 
 	/**
-	 * Processes items in the order
-	 * 
-	 * @param orderId
+	 * processes items in the order
 	 */
-	public String processShipment(String orderId) {
-		if (store.orderList.search(orderId) != null) {
-			Product updatedProduct = store.orderList.search(orderId).getProduct();
-			store.productList.addExisitingProduct(updatedProduct.getId());
-			store.orderList.removeOrder(orderId);
+	public String processShipment(String orderID) {
+		if (store.orderList.search(orderID) != null) {
+			Product updatedProduct = store.orderList.search(orderID).getProduct();
+			store.productList.addExisitingProduct(updatedProduct.getID());
+			store.orderList.removeOrder(orderID);
 			return updatedProduct.toString();
 		}
 		return null;
 
 	}
 
-	public String changePrice(int productId, int priceDollars, int priceCents) {
-		return "Successfully changed price on " + productId + " to $" + priceDollars + "." + priceCents + ".";
+	public String changePrice(int productID, int priceDollars, int priceCents) {
+		return "Successfully changed price on " + productID + " to $" + priceDollars + "." + priceCents + ".";
 	}
 
-	public String retrieveProductInfo(int productId) {
-		return "Product details for " + productId;
+	public String retrieveProductInfo(int productID) {
+		return "Product details for " + productID;
 	}
 
 	/**
-	 * Displays all members starting with a given String
-	 * 
-	 * @param memberString the beginning of a member's name
-	 * @return display of all members starting with the string
+	 * displays a list of members that have names matching the String argument
 	 */
 	public String retrieveMemberInfo(String memberString) {
 		String memberDisplay = "Members Beginning with " + memberString + ":\n";
@@ -101,8 +93,8 @@ public class Store {
 		return memberDisplay;
 	}
 
-	public String printTransactions(int memberId) {
-		return "Transactions for " + memberId;
+	public String printTransactions(int memberID) {
+		return "Transactions for " + memberID;
 	}
 
 	public String listOutstandingOrders() {
@@ -110,7 +102,7 @@ public class Store {
 		buffer.append("id,product,date,qty\n");
 		for (Iterator<Order> iterator = orderList.iterator(); iterator.hasNext();) {
 			Order order = (Order) iterator.next();
-			buffer.append(order.getId());
+			buffer.append(order.getID());
 			buffer.append(",");
 			buffer.append(order.getProduct().getName());
 			buffer.append(",");
@@ -129,7 +121,7 @@ public class Store {
 			Product product = (Product) iterator.next();
 			buffer.append(product.getName());
 			buffer.append(",");
-			buffer.append(product.getId());
+			buffer.append(product.getID());
 			buffer.append(",");
 			buffer.append(Integer.toString(product.getInventory()));
 			buffer.append(",");
@@ -142,11 +134,11 @@ public class Store {
 	}
 
 	/**
-	 * Displays all members
+	 * displays all members
 	 */
 	public String listAllMembers() {
 		Iterator<Member> iterator = memberList.iterator();
-		String memberDisplay = "List of members (name, address, phone, id)";
+		String memberDisplay = "List of members (name, address, phone, ID number)";
 		while (iterator.hasNext()) {
 			Member member = iterator.next();
 			memberDisplay += member.toString() + "\n";
@@ -155,8 +147,6 @@ public class Store {
 	}
 
 	/**
-	 * Serializes the Store object
-	 * 
 	 * @return true iff the data could be saved
 	 */
 	public static boolean save() {

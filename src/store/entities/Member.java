@@ -14,10 +14,9 @@ import java.util.List;
 import java.util.ListIterator;
 
 /**
- * Member represents a member of the store
+ * Member represents a member of Red River Co-Op.
  * 
  * @author Andrew Vick
- *
  */
 public class Member implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -31,11 +30,7 @@ public class Member implements Serializable {
 	private List<Transaction> transactions = new LinkedList<Transaction>();
 
 	/**
-	 * Creates a single member
-	 * 
-	 * @param name        The name of the member
-	 * @param address     The address of the member
-	 * @param phoneNumber The phone number of hte member
+	 * constructor
 	 */
 	public Member(String name, String address, String phoneNumber) {
 		this.name = name;
@@ -45,82 +40,40 @@ public class Member implements Serializable {
 		id = MEMBER_STRING + ++idCounter;
 	}
 
-	/**
-	 * Getter for the Id
-	 * 
-	 * @return Member's Id
-	 */
-	public String getId() {
+	public String getID() {
 		return id;
 	}
 
-	/**
-	 * Getter for the member's name
-	 * 
-	 * @return member's name
-	 */
 	public String getName() {
 		return name;
 	}
 
-	/**
-	 * Setter for member's name
-	 * 
-	 * @param name
-	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	/**
-	 * Getter for member's address
-	 * 
-	 * @return member's address
-	 */
 	public String getAddress() {
 		return address;
 	}
 
-	/**
-	 * Setter for member's address
-	 * 
-	 * @param address
-	 */
 	public void setAddress(String address) {
 		this.address = address;
 	}
 
-	/**
-	 * Getter for the date the member joined the store
-	 * 
-	 * @return date the member joined the store
-	 */
 	public Calendar getDateJoined() {
 		return dateJoined;
 	}
 
-	/**
-	 * Getter for member's phone number
-	 * 
-	 * @return member's phone number
-	 */
 	public String getPhoneNumber() {
 		return phoneNumber;
 	}
 
-	/**
-	 * Setter for member's phone number
-	 * 
-	 * @param phoneNumber
-	 */
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
 
 	/**
-	 * Adds a transaction to the transaction collection
-	 * 
-	 * @param transaction
+	 * add an instance of Transaction to transactions
 	 */
 	public void addMemberTransaction(Transaction transaction) {
 		transactions.add(transaction);
@@ -138,19 +91,10 @@ public class Member implements Serializable {
 		return result;
 	}
 
-	/**
-	 * return an iterator for the transaction collection
-	 * 
-	 * @return
-	 */
 	public Iterator<Transaction> iterator() {
 		return transactions.iterator();
 	}
 
-	/**
-	 * String form of the member
-	 * 
-	 */
 	@Override
 	public String toString() {
 		String string = "Id: " + id + ", member name: " + name + ", address: " + address + ", date joined: "

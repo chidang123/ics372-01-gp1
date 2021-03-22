@@ -23,14 +23,14 @@ public class ProductList implements Serializable {
 	public void addExisitingProduct(String id) {
 		for (Iterator<Product> iterator = products.iterator(); iterator.hasNext();) {
 			Product product = iterator.next();
-			if (product.getId().equals(id)) {
-				product.setInventory(product.getReorderThreshold() * 2); // can't remember is its * 2 all the time of or
+			if (product.getID().equals(id)) {
+				product.setInventory(product.getReorderThreshold()); // only *2 for new products
 				break; // breaking loop and function - no longer needs it since item found
 			}
 		}
 	}
 
-	// business case 3
+	// business case 3,
 	public boolean addNewProduct(Product product) {
 		products.add(product);
 		return true;
@@ -40,22 +40,28 @@ public class ProductList implements Serializable {
 	public void showProductInfo(String id) {
 		for (Iterator<Product> iterator = products.iterator(); iterator.hasNext();) {
 			Product product = iterator.next();
-			if (product.getId().equals(id)) {
+			if (product.getID().equals(id)) {
 				product.toString();
 			}
 		}
 	}
 
-	// business case 6
+	/**
+	 * finds a product via ID number and changes the product's price to the price
+	 * passed as an argument
+	 */
 	public void changePrice(String id, double newPrice) {
 		for (Iterator<Product> iterator = products.iterator(); iterator.hasNext();) {
 			Product product = iterator.next();
-			if (product.getId().equals(id)) {
+			if (product.getID().equals(id)) {
 				product.setPrice(newPrice);
 			}
 		}
 	}
 
+	/**
+	 * removes the passed product from the list of products
+	 */
 	public boolean removeProduct(Product product) {
 		int index = products.indexOf(product);
 		products.remove(index);
@@ -63,17 +69,13 @@ public class ProductList implements Serializable {
 	}
 
 	/**
-	 * Checks whether a product with a given product id exists.
-	 * 
-	 * @param productId the id of the product
-	 * @return a reference to the product if productId is valid, otherwise it return
-	 *         false
-	 * 
+	 * checks whether a product with a given ID number exists in the list of
+	 * products
 	 */
 	public Product search(String productId) {
 		for (Iterator<Product> iterator = products.iterator(); iterator.hasNext();) {
 			Product product = iterator.next();
-			if (product.getId().equals(productId)) {
+			if (product.getID().equals(productId)) {
 				return product;
 			}
 		}
