@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Collection class for members
+ * collection class for Member
  * 
  * @author Andrew Vick
  *
@@ -17,16 +17,11 @@ public class MemberList implements Serializable {
 
 	/**
 	 * Checks whether a member with a given member id exists.
-	 * 
-	 * @param memberId the id of the member
-	 * @return a reference to the member if memberId is valid, otherwise it return
-	 *         false
-	 * 
 	 */
 	public Member search(String memberId) {
 		for (Iterator<Member> iterator = members.iterator(); iterator.hasNext();) {
 			Member member = iterator.next();
-			if (member.getId().equals(memberId)) {
+			if (member.getID().equals(memberId)) {
 				return member;
 			}
 		}
@@ -34,9 +29,7 @@ public class MemberList implements Serializable {
 	}
 
 	/**
-	 * Inserts a member into the member collection
-	 * 
-	 * @param member the member to be inserted
+	 * inserts a Member into members
 	 */
 	public void insertMember(Member member) {
 		members.add(member);
@@ -61,8 +54,8 @@ public class MemberList implements Serializable {
 	}
 
 	/**
-	 * String form of the collection
-	 * 
+	 * The method below is an override of the toString method that displays a list
+	 * of all the members, along with each members' respective information.
 	 */
 	@Override
 	public String toString() {

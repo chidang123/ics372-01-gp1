@@ -7,20 +7,14 @@ import java.util.List;
 import java.util.ListIterator;
 
 /**
- * Maintains a list of Order objects. It is used by OrderList
- * 
- * @author Brahma Dathan
- *
+ * maintains a list of Order objects
  */
-//Change//Change
 public class OrderList implements Iterable<Order>, Serializable {
 	private static final long serialVersionUID = 1L;
 	private List<Order> orders = new LinkedList<Order>();
 
 	/**
-	 * Adds an Order object to the list.
-	 * 
-	 * @param hold the Order object to be added
+	 * adds an order to the list
 	 */
 	public boolean addOrder(Order order) {
 		orders.add(order);
@@ -28,17 +22,13 @@ public class OrderList implements Iterable<Order>, Serializable {
 	}
 
 	/**
-	 * Removes the order from the orderList
-	 * 
-	 * @param the orderId for removing an order
-	 * @return the removed Order object if the order could be removed; otherwise,
-	 *         null
+	 * removes an order with the passed ID number from the list
 	 */
-	public Order removeOrder(String orderId) {
+	public Order removeOrder(String orderID) {
 		for (ListIterator<Order> iterator = orders.listIterator(); iterator.hasNext();) {
 			Order order = iterator.next();
-			String id = order.getId();
-			if (id.equals(orderId)) {
+			String id = order.getID();
+			if (id.equals(orderID)) {
 				iterator.remove();
 				return order;
 			}
@@ -47,17 +37,13 @@ public class OrderList implements Iterable<Order>, Serializable {
 	}
 
 	/**
-	 * Removes the order for the specific product
-	 * 
-	 * @param productId the product id for removing a product
-	 * @return the removed Order object if the order could be removed; otherwise,
-	 *         null
+	 * removes an order that contains a product with the passed ID number
 	 */
-	public Order removeOrderOnProduct(String productId) {
+	public Order removeOrderOnProduct(String productID) {
 		for (ListIterator<Order> iterator = orders.listIterator(); iterator.hasNext();) {
 			Order order = iterator.next();
-			String id = order.getProduct().getId();
-			if (id.equals(productId)) {
+			String id = order.getProduct().getID();
+			if (id.equals(productID)) {
 				iterator.remove();
 				return order;
 			}
@@ -66,17 +52,12 @@ public class OrderList implements Iterable<Order>, Serializable {
 	}
 
 	/**
-	 * Checks whether an order with a given order id exists.
-	 * 
-	 * @param orderId the id of the order
-	 * @return a reference to the Order if orderId is valid, otherwise it return
-	 *         false
-	 * 
+	 * checks whether an order with a given ID number exists
 	 */
-	public Order search(String orderId) {
+	public Order search(String orderID) {
 		for (Iterator<Order> iterator = orders.iterator(); iterator.hasNext();) {
 			Order order = iterator.next();
-			if (order.getId().equals(orderId)) {
+			if (order.getID().equals(orderID)) {
 				return order;
 			}
 		}

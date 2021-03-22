@@ -20,7 +20,7 @@ public class Order implements Serializable {
 		date = new Date();
 	}
 
-	public String getId() {
+	public String getID() {
 		return id;
 	}
 
@@ -31,12 +31,10 @@ public class Order implements Serializable {
 	public int getNewStock() {
 		return newStock;
 	}
-	
+
 	public Date getDate() {
 		return date;
 	}
-	
-	
 
 	/**
 	 * String form of the member

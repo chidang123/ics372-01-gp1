@@ -27,11 +27,11 @@ public class Product implements Serializable {
 		this.reorderThreshold = reorderThreshold;
 	}
 
-	public String getId() {
+	public String getID() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setID(String id) {
 		this.id = id;
 	}
 
@@ -74,7 +74,6 @@ public class Product implements Serializable {
 				+ ", reorderThreshold=" + reorderThreshold + "]";
 	}
 
-	// Did auto generate for id
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -83,7 +82,6 @@ public class Product implements Serializable {
 		return result;
 	}
 
-	// Did auto generate for two of the fields - name and id
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
