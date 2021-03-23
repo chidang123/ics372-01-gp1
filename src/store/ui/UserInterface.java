@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.util.Hashtable;
 import java.util.Scanner;
 import java.util.StringTokenizer;
+import java.util.ArrayList;
 
 import store.entities.Store;
 
@@ -215,24 +216,19 @@ public class UserInterface {
 
 	private void checkout() {
 		boolean cartNotEmpty = true;
-		String productIdBuffer;
-		int productQtyBuffer;
-		Hashtable<String, Integer> cartContents =
-		new Hashtable<String, Integer>();
-		//double runningTotal;
+		ArrayList<String> productIds = new ArrayList<String>();
+		ArrayList<Integer> productQtys = new ArrayList<Integer>();
 		
 		while (cartNotEmpty) {
 			System.out.println("Please enter the productId of the item:");
-			productIdBuffer = scan.next();
-			System.out.println("Enter the quantity of "
-			+ productIdBuffer + ":");
-			productQtyBuffer = scan.nextInt();
-			cartContents.put(productIdBuffer,productQtyBuffer);
+			productIds.add(scan.next());
+			System.out.println("Enter the quantity:");
+			productQtys.add(scan.nextInt());
 			System.out.println("Do you have another item to checkout "
 			+ "( true / false )?");
 			cartNotEmpty = scan.nextBoolean();
 		}
-		System.out.println(store.checkout(cartContents));
+		System.out.println(store.checkout(productIds,productQtys));
 	}
 
 	private void processShipment() {

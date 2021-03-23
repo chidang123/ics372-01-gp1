@@ -3,6 +3,7 @@ package store.entities;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Iterator;
 
@@ -56,13 +57,34 @@ public class Store {
 		return product;
 	}
 
-	public String checkout(Hashtable<String, Integer> cartContents) {
-		StringBuilder buffer = new StringBuilder();
-		Product productBuffer = null;
+	public String checkout(ArrayList<String> productIds,
+	ArrayList<Integer> productQtys) {
 		double runningTotal = 0;
+		if ( productIds.size() != productQtys.size() ) {
+			return "Your parameters are mismatched.";
+		}
+		StringBuilder buffer = new StringBuilder();
 		
+		for ( int i = 0; i < productIds.size(); i++ ) {
+			Product productBuffer = store.productList.search(productIds.get(i));
+			buffer.append(productBuffer.getName());
+			buffer.append(",");
+			buffer.append(Integer.toString(productQtys.get(i)));
+			buffer.append(",");
+			buffer.append(Double.toString(productBuffer.getPrice()));
+			runningTotal += productBuffer.getPrice();
+			Boolean reorder = productBuffer.setInventory(
+			productBuffer.getInventory() - productQtys.get(i));
+			if (reorder) {
+				//store.OrderList
+				System.out.println("Finish reorder logic here.");
+			}
+		}
+
+		/*
 		cartContents.forEach( (k,v) -> {
-			productBuffer = store.productList.search(k);
+			double runningTotal = 0;
+			Product productBuffer = store.productList.search(k);
 			buffer.append(productBuffer.getName());
 			buffer.append(",");
 			buffer.append(v.toString());
@@ -73,6 +95,7 @@ public class Store {
 			productBuffer.getInventory() - v);
 			}
 		);
+		*/
 		buffer.append(",," + Double.toString(runningTotal));
 		return buffer.toString();
 	}
