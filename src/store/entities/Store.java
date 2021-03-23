@@ -56,7 +56,7 @@ public class Store {
 		return product;
 	}
 
-	public String checkout(Hashtable<String, Integer> cart) {
+	public String checkout(Hashtable<Integer, Integer> cart) {
 		return "Checkout Output.";
 	}
 
