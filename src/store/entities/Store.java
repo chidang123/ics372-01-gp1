@@ -60,10 +60,13 @@ public class Store {
 	public String checkout(ArrayList<String> productIds,
 	ArrayList<Integer> productQtys) {
 		double runningTotal = 0;
+		StringBuilder buffer = new StringBuilder();
+		ArrayList<String> reorderList = new ArrayList<String>();
+		
 		if ( productIds.size() != productQtys.size() ) {
 			return "Your parameters are mismatched.";
 		}
-		StringBuilder buffer = new StringBuilder();
+
 		
 		for ( int i = 0; i < productIds.size(); i++ ) {
 			Product productBuffer = store.productList.search(productIds.get(i));
@@ -72,31 +75,21 @@ public class Store {
 			buffer.append(Integer.toString(productQtys.get(i)));
 			buffer.append(",");
 			buffer.append(Double.toString(productBuffer.getPrice()));
-			runningTotal += productBuffer.getPrice();
+			buffer.append(",");
+			buffer.append(Double.toString(productBuffer.getPrice() *
+			productQtys.get(i)));
+			runningTotal += ( productBuffer.getPrice() * productQtys.get(i) );
 			Boolean reorder = productBuffer.setInventory(
 			productBuffer.getInventory() - productQtys.get(i));
 			if (reorder) {
-				//store.OrderList
-				System.out.println("Finish reorder logic here.");
+				reorderList.add(productBuffer.getId());
 			}
 		}
 
-		/*
-		cartContents.forEach( (k,v) -> {
-			double runningTotal = 0;
-			Product productBuffer = store.productList.search(k);
-			buffer.append(productBuffer.getName());
-			buffer.append(",");
-			buffer.append(v.toString());
-			buffer.append(",");
-			buffer.append(Double.toString(productBuffer.getPrice()));
-			runningTotal += productBuffer.getPrice();
-			Boolean reorder = productBuffer.setInventory(
-			productBuffer.getInventory() - v);
-			}
-		);
-		*/
-		buffer.append(",," + Double.toString(runningTotal));
+		buffer.append(",,," + Double.toString(runningTotal));
+		
+		// Add logic here issuing reorders and adding output to buffer.
+		
 		return buffer.toString();
 	}
 
