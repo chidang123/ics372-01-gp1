@@ -55,8 +55,12 @@ public class Product implements Serializable {
 		return inventory;
 	}
 
-	public void setInventory(int inventory) {
+	public Boolean setInventory(int inventory) {
 		this.inventory = inventory;
+		if ( inventory <= this.reorderThreshold ) {
+			return true;
+		}
+		return false;
 	}
 
 	public int getReorderThreshold() {

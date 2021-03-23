@@ -215,17 +215,19 @@ public class UserInterface {
 
 	private void checkout() {
 		boolean cartNotEmpty = true;
-		int productIdBuffer;
+		String productIdBuffer;
 		int productQtyBuffer;
-		Hashtable<Integer, Integer> cartContents =
-		new Hashtable<Integer, Integer>();
+		Hashtable<String, Integer> cartContents =
+		new Hashtable<String, Integer>();
+		//double runningTotal;
+		
 		while (cartNotEmpty) {
 			System.out.println("Please enter the productId of the item:");
-			productIdBuffer = scan.nextInt();
+			productIdBuffer = scan.next();
 			System.out.println("Enter the quantity of "
-			+ Integer.toString(productIdBuffer) + ":");
+			+ productIdBuffer + ":");
 			productQtyBuffer = scan.nextInt();
-			
+			cartContents.put(productIdBuffer,productQtyBuffer);
 			System.out.println("Do you have another item to checkout "
 			+ "( true / false )?");
 			cartNotEmpty = scan.nextBoolean();

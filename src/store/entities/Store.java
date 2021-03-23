@@ -56,8 +56,25 @@ public class Store {
 		return product;
 	}
 
-	public String checkout(Hashtable<Integer, Integer> cart) {
-		return "Checkout Output.";
+	public String checkout(Hashtable<String, Integer> cartContents) {
+		StringBuilder buffer = new StringBuilder();
+		Product productBuffer = null;
+		double runningTotal = 0;
+		
+		cartContents.forEach( (k,v) -> {
+			productBuffer = store.productList.search(k);
+			buffer.append(productBuffer.getName());
+			buffer.append(",");
+			buffer.append(v.toString());
+			buffer.append(",");
+			buffer.append(Double.toString(productBuffer.getPrice()));
+			runningTotal += productBuffer.getPrice();
+			Boolean reorder = productBuffer.setInventory(
+			productBuffer.getInventory() - v);
+			}
+		);
+		buffer.append(",," + Double.toString(runningTotal));
+		return buffer.toString();
 	}
 
 	/**
