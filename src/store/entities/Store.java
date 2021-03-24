@@ -63,39 +63,43 @@ public class Store {
 			return "Your parameters are mismatched.";
 		}
 
+		buffer.append("\nItem\t\t\tQuantity\t\tUnit Price\t\tPrice\n");
 		
-		for ( int i = 0; i < productIds.size(); i++ ) {
-			Product productBuffer = store.productList.search(productIds.get(i));
+		for ( int cartIndex = 0; cartIndex < productIds.size(); cartIndex++ ) {
+			Product productBuffer = store.productList.search(productIds.get(
+			cartIndex));
 			buffer.append(productBuffer.getName());
-			buffer.append(",");
-			buffer.append(Integer.toString(productQtys.get(i)));
-			buffer.append(",");
+			buffer.append("\t\t\t");
+			buffer.append(Integer.toString(productQtys.get(cartIndex)));
+			buffer.append("\t\t\t");
 			buffer.append(Double.toString(productBuffer.getPrice()));
-			buffer.append(",");
+			buffer.append("\t\t\t");
 			buffer.append(Double.toString(productBuffer.getPrice() *
-			productQtys.get(i)));
-			runningTotal += ( productBuffer.getPrice() * productQtys.get(i) );
+			productQtys.get(cartIndex)));
+			buffer.append("\n");
+			runningTotal += ( productBuffer.getPrice() *
+			productQtys.get(cartIndex) );
 			Boolean reorder = productBuffer.setInventory(
-			productBuffer.getInventory() - productQtys.get(i));
+			productBuffer.getInventory() - productQtys.get(cartIndex));
 			if (reorder) {
-				reorderList.add(productBuffer.getId());
+				reorderList.add(productBuffer.getID());
 			}
 		}
 
-		buffer.append(",,," + Double.toString(runningTotal) );
+		buffer.append("\nCart Total: " + Double.toString(runningTotal) + "\n" );
 		
 		if (! reorderList.isEmpty() ) {
 			buffer.append("\n\n");
-			for ( int j = 0; j < reorderList.size(); j++ ) {
-				Product productToOrder = productList.search(reorderList.get(j));
+			for ( int reorderIndex = 0; reorderIndex < reorderList.size(); reorderIndex++ ) {
+				Product productToOrder = productList.search(reorderList.get(reorderIndex));
 				Order newOrder = new Order(productToOrder);
 				orderList.addOrder(newOrder);
 				buffer.append( Integer.toString(
 				productToOrder.getReorderThreshold() * 2 ) );
 				buffer.append( " units of " );
 				buffer.append(productToOrder.getName());
-				buffer.append( " in order " );
-				buffer.append(newOrder.getId());
+				buffer.append( " were ordered in " );
+				buffer.append(newOrder.getID());
 				buffer.append(".\n");
 			}
 		}
