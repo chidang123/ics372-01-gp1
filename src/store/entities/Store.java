@@ -3,7 +3,7 @@ package store.entities;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.util.Hashtable;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 //Change
@@ -53,8 +53,53 @@ public class Store {
 		return product;
 	}
 
-	public String checkout(Hashtable<String, Integer> cart) {
-		return "Checkout Output.";
+	public String checkout(ArrayList<String> productIds,
+	ArrayList<Integer> productQtys) {
+		double runningTotal = 0;
+		StringBuilder buffer = new StringBuilder();
+		ArrayList<String> reorderList = new ArrayList<String>();
+		
+		if ( productIds.size() != productQtys.size() ) {
+			return "Your parameters are mismatched.";
+		}
+
+		
+		for ( int i = 0; i < productIds.size(); i++ ) {
+			Product productBuffer = store.productList.search(productIds.get(i));
+			buffer.append(productBuffer.getName());
+			buffer.append(",");
+			buffer.append(Integer.toString(productQtys.get(i)));
+			buffer.append(",");
+			buffer.append(Double.toString(productBuffer.getPrice()));
+			buffer.append(",");
+			buffer.append(Double.toString(productBuffer.getPrice() *
+			productQtys.get(i)));
+			runningTotal += ( productBuffer.getPrice() * productQtys.get(i) );
+			Boolean reorder = productBuffer.setInventory(
+			productBuffer.getInventory() - productQtys.get(i));
+			if (reorder) {
+				reorderList.add(productBuffer.getId());
+			}
+		}
+
+		buffer.append(",,," + Double.toString(runningTotal) );
+		
+		if (! reorderList.isEmpty() ) {
+			buffer.append("\n\n");
+			for ( int j = 0; j < reorderList.size(); j++ ) {
+				Product productToOrder = productList.search(reorderList.get(j));
+				Order newOrder = new Order(productToOrder);
+				orderList.addOrder(newOrder);
+				buffer.append( Integer.toString(
+				productToOrder.getReorderThreshold() * 2 ) );
+				buffer.append( " units of " );
+				buffer.append(productToOrder.getName());
+				buffer.append( " in order " );
+				buffer.append(newOrder.getId());
+				buffer.append(".\n");
+			}
+		}
+		return buffer.toString();
 	}
 
 	/**

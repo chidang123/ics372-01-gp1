@@ -68,5 +68,4 @@ public class OrderList implements Iterable<Order>, Serializable {
 	public Iterator<Order> iterator() {
 		return orders.iterator();
 	}
-
 }
