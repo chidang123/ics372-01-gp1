@@ -4,7 +4,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.Hashtable;
 import java.util.Iterator;
 
 //Change
@@ -86,10 +85,23 @@ public class Store {
 			}
 		}
 
-		buffer.append(",,," + Double.toString(runningTotal));
+		buffer.append(",,," + Double.toString(runningTotal) );
 		
-		// Add logic here issuing reorders and adding output to buffer.
-		
+		if (! reorderList.isEmpty() ) {
+			buffer.append("\n\n");
+			for ( int j = 0; j < reorderList.size(); j++ ) {
+				Product productToOrder = productList.search(reorderList.get(j));
+				Order newOrder = new Order(productToOrder);
+				orderList.addOrder(newOrder);
+				buffer.append( Integer.toString(
+				productToOrder.getReorderThreshold() * 2 ) );
+				buffer.append( " units of " );
+				buffer.append(productToOrder.getName());
+				buffer.append( " in order " );
+				buffer.append(newOrder.getId());
+				buffer.append(".\n");
+			}
+		}
 		return buffer.toString();
 	}
 
