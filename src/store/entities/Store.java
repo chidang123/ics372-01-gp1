@@ -154,21 +154,22 @@ public class Store {
 		return memberDisplay + "\n" + "Found " + count + " Results";
 	}
 
-	public String printTransactions(int memberID) {
-		return "Transactions for " + memberID;
+	public String printTransactions(String memberID) {
+		Member member = memberList.search(memberID);
+		member.
 	}
 
 	public String listOutstandingOrders() {
 		StringBuilder buffer = new StringBuilder();
-		buffer.append("id,product,date,qty\n");
+		buffer.append("ID\tProduct\tDate\tQuantity\n");
 		for (Iterator<Order> iterator = orderList.iterator(); iterator.hasNext();) {
 			Order order = (Order) iterator.next();
 			buffer.append(order.getID());
-			buffer.append(",");
+			buffer.append("\t");
 			buffer.append(order.getProduct().getName());
-			buffer.append(",");
+			buffer.append("\t");
 			buffer.append(order.getDate().toString());
-			buffer.append(",");
+			buffer.append("\t");
 			buffer.append(Integer.toString(order.getNewStock()));
 			buffer.append("\n");
 		}
@@ -177,17 +178,17 @@ public class Store {
 
 	public String listAllProducts() {
 		StringBuilder buffer = new StringBuilder();
-		buffer.append("name,id,onhand,price,reorder\n");
+		buffer.append("Name\tID\tOn Hand\tPrice\tReorder\n");
 		for (Iterator<Product> iterator = productList.iterator(); iterator.hasNext();) {
 			Product product = (Product) iterator.next();
 			buffer.append(product.getName());
-			buffer.append(",");
+			buffer.append("\t");
 			buffer.append(product.getID());
-			buffer.append(",");
+			buffer.append("t");
 			buffer.append(Integer.toString(product.getInventory()));
-			buffer.append(",");
+			buffer.append("t");
 			buffer.append(Double.toString(product.getPrice()));
-			buffer.append(",");
+			buffer.append("\t");
 			buffer.append(Integer.toString(product.getReorderThreshold()));
 			buffer.append("\n");
 		}
