@@ -37,17 +37,17 @@ public class AutomatedTester {
 
 	public void testRemoveMember() {
 		/*
-		 * We need a way to get a member ID for this process without manually
-		 * entering the number. Enroll member could return a Member object
-		 * instead of a String, when whatever receives the object could
-		 * call toString()
+		 * This value is hard coded which is not ideal, but since we
+		 * expect it to be input by human it might be reasonable.
 		 */
+		store.removeMember("XM0");
 	}
 	
 	public void testAddProduct() {
 		for ( int addProdIndex = 0; addProdIndex < productNames.length ;
 			addProdIndex++ ) {
-			store.addProduct(Integer.toString(addProdIndex),
+			products[addProdIndex] = store.addProduct(
+			Integer.toString(addProdIndex),
 			productNames[addProdIndex], prices[addProdIndex],
 			addProdIndex + 5, ( addProdIndex + 1 ) * 2 );
 		}
