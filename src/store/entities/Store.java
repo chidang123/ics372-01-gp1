@@ -53,55 +53,21 @@ public class Store {
 		return product;
 	}
 
-<<<<<<< Upstream, based on origin/main
-	public String checkout(ArrayList<String> productIds, ArrayList<Integer> productQtys) {
-=======
+
 	public String checkout(String memberID, ArrayList<String> productIds,
 	ArrayList<Integer> productQtys) {
->>>>>>> b0e656d Tests WIP
 		double runningTotal = 0;
 		StringBuilder buffer = new StringBuilder();
 		ArrayList<String> reorderList = new ArrayList<String>();
-<<<<<<< Upstream, based on origin/main
 
 		if (productIds.size() != productQtys.size()) {
-=======
-		Transaction memberTransaction = new Transaction(
-		Integer.parseInt(memberID));
-		Product productBuffer = null;
-		
-		if ( productIds.size() != productQtys.size() ) {
->>>>>>> 028b4c5 Checkout updated.
 			return "Your parameters are mismatched.";
 		}
-		
-		for ( int tranIndex = 0; tranIndex < productIds.size(); tranIndex++ ) {
-			// Get the product based on memberID
-			productBuffer = productList.search(productIds.get(tranIndex));
-			/*
-			 * Create new product because we don't want to impact existing
-			 * inventory.
-			 */
-			productBuffer = new Product(productBuffer.getID(),
-			productBuffer.getName(), productBuffer.getPrice(),
-			productQtys.get(tranIndex), productBuffer.getReorderThreshold());
-			// Add new product to transaction
-			memberTransaction.addProduct(productBuffer);
-		}
-		
-		Member memberBuffer = memberList.search(memberID);		
-		memberBuffer.addMemberTransaction(memberTransaction);
 
 		buffer.append("\nItem\t\t\tQuantity\t\tUnit Price\t\tPrice\n");
-<<<<<<< Upstream, based on origin/main
 
 		for (int cartIndex = 0; cartIndex < productIds.size(); cartIndex++) {
-			Product productBuffer = store.productList.search(productIds.get(cartIndex));
-=======
-		
-		for ( int cartIndex = 0; cartIndex < productIds.size(); cartIndex++ ) {
 			productBuffer = store.productList.search(productIds.get(cartIndex));
->>>>>>> 028b4c5 Checkout updated.
 			buffer.append(productBuffer.getName());
 			buffer.append("\t\t\t");
 			buffer.append(Integer.toString(productQtys.get(cartIndex)));
@@ -121,15 +87,10 @@ public class Store {
 
 		if (!reorderList.isEmpty()) {
 			buffer.append("\n\n");
-<<<<<<< Upstream, based on origin/main
-			for (int reorderIndex = 0; reorderIndex < reorderList.size(); reorderIndex++) {
-				Product productToOrder = productList.search(reorderList.get(reorderIndex));
-=======
 			for ( int reorderIndex = 0; reorderIndex < reorderList.size();
 				reorderIndex++ ) {
 				Product productToOrder = productList.search(
 				reorderList.get(reorderIndex));
->>>>>>> b0e656d Tests WIP
 				Order newOrder = new Order(productToOrder);
 				orderList.addOrder(newOrder);
 				buffer.append(Integer.toString(productToOrder.getReorderThreshold() * 2));
@@ -157,15 +118,10 @@ public class Store {
 
 	}
 
-<<<<<<< Upstream, based on origin/main
 	public String changePrice(String productID, double newPrice) {
 		Product product = productList.search(productID);
 		productList.changePrice(productID, newPrice);
 		return "The new price for " + product.getName() + " is: " + product.getPrice();
-=======
-	public String changePrice(int productID, double price) {
-		return "Successfully changed price on " + productID + " to $" + priceDollars + "." + priceCents + ".";
->>>>>>> 793db4a Work in progress on tests.
 	}
 
 	public String retrieveProductInfo(String productString) {
