@@ -36,10 +36,6 @@ public class Order implements Serializable {
 		return date;
 	}
 
-	/**
-	 * String form of the member
-	 * 
-	 */
 	@Override
 	public String toString() {
 		String string = "id: " + id + ", Product name: " + product.getName() + ", New Stock: " + newStock;
