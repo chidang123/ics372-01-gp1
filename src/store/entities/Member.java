@@ -85,7 +85,8 @@ public class Member implements Serializable {
 			Transaction transaction = iterator.next();
 			if ((transaction.getDate().equals(startDate) || transaction.getDate().after(startDate))
 					&& (transaction.getDate().equals(endDate) || transaction.getDate().before(endDate))) {
-				result = "Transaction ID: " + transaction.getTransactionID() + "/nDate: " + transaction.getDate();
+				result += "Transaction ID: " + transaction.getTransactionID() + "/nDate: " + transaction.getDate()
+						+ "\n";
 			}
 		}
 		return result;
