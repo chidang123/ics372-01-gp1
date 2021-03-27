@@ -66,7 +66,7 @@ public class UserInterface {
 	public void help() {
 		System.out.println(" At the prompt enter the number for the function " + "you need to perform:\n\n" + "  "
 				+ ENROLL_MEMBER + ": Enroll a member.\t\t" + REMOVE_MEMBER + ": Remove a member.\n" + "  " + ADD_PRODUCT
-				+ ": Add a product.\t\t" + CHECKOUT + ": Check out a memeber's items.\n" + "  " + PROCESS_SHIPMENT
+				+ ": Add a product.\t\t" + CHECKOUT + ": Check out a member's items.\n" + "  " + PROCESS_SHIPMENT
 				+ ": Process Shipment.\t\t" + CHANGE_PRICE + ": Change price.\n" + "  " + RETRIEVE_PRODUCT_INFO
 				+ ": Retrieve product info.\t" + RETRIEVE_MEMBER_INFO + ": Retrieve member info.\n" + "  "
 				+ PRINT_TRANSACTIONS + ": Print Transactions.\t" + LIST_OUTSTANDING_ORDERS
@@ -170,10 +170,10 @@ public class UserInterface {
 
 	private void enrollMember() {
 		System.out.println("Enter yes if the new member payed the fee, or no if they did not pay the fee");
-		String feePaid = scan.next();
+		String feePaid = scan.nextLine();
 		if (feePaid.equals("yes")) {
 			System.out.println("Enter the name of the new member: ");
-			String name = scan.next();
+			String name = scan.nextLine();
 			System.out.println("Enter the address of the new member: ");
 			String address = scan.nextLine();
 			System.out.println("Enter the phone number of the new member: ");
@@ -182,13 +182,13 @@ public class UserInterface {
 		} else if (feePaid.equals("no")) {
 			System.out.println("The member was not added because they did not pay the fee");
 		} else {
-			System.out.println("Please enter yes, or no for if the new member paid the fee");
+			System.out.println("Only enter yes or no, to try again call the fuction with 1 again.");
 		}
 	}
 
 	private void removeMember() {
 		System.out.println("Enter the member's Id: ");
-		String memberId = scan.next();
+		String memberId = scan.nextLine();
 		boolean removeOrNot = store.removeMember(memberId);
 		if (removeOrNot) {
 			System.out.println("Member was removed from the system.");
@@ -200,15 +200,16 @@ public class UserInterface {
 	private void addProduct() {
 		// Update input details.
 		System.out.println("Enter the ID of the product");
-		String id = scan.next();
+		String id = scan.nextLine();
 		System.out.println("Enter the name of the product");
-		String name = scan.next();
+		String name = scan.nextLine();
 		System.out.println("Enter the price of the product");
 		double price = scan.nextDouble();
 		System.out.println("Enter the current inventory");
 		int inventory = scan.nextInt();
 		System.out.println("Enter the reorder threshold");
 		int reorder = scan.nextInt();
+		scan.nextLine();
 
 		System.out.println(store.addProduct(id, name, price, inventory, reorder));
 	}
@@ -220,26 +221,28 @@ public class UserInterface {
 		String memberId = null;
 		
 		System.out.println("Please enter the memberId.");
-		memberId = scan.next();
+		memberId = scan.nextLine();
 		while (cartNotEmpty) {
 			System.out.println("Please enter the productId of the item:");
-			productIds.add(scan.next());
+			productIds.add(scan.nextLine());
 			System.out.println("Enter the quantity:");
 			productQtys.add(scan.nextInt());
 			System.out.println("Do you have another item to checkout " + "( true / false )?");
 			cartNotEmpty = scan.nextBoolean();
+			scan.nextLine();
+			
 		}
 		System.out.println(store.checkout(memberId,productIds,productQtys));
 	}
 
 	private void processShipment() {
 		System.out.println("Enter the ID of the order");
-		String orderId = scan.next();
+		String orderId = scan.nextLine();
 		System.out.println("Do you have more products to enter?");
-		String moreShipments = scan.next();
+		String moreShipments = scan.nextLine();
 		while (moreShipments.equals("yes")) {
 			System.out.println("Enter the ID of the order");
-			orderId = scan.next();
+			orderId = scan.nextLine();
 			System.out.println(store.processShipment(orderId));
 		}
 	}
@@ -248,15 +251,16 @@ public class UserInterface {
 		String productId;
 		double newPrice;
 		System.out.println("Enter ID for the product you would like to change.");
-		productId = scan.next();
+		productId = scan.nextLine();
 		System.out.println("Enter the new price for the item.");
 		newPrice = scan.nextDouble();
+		scan.nextLine();
 		System.out.println(store.changePrice(productId, newPrice));
 	}
 
 	private void retrieveProductInfo() {
 		System.out.println("Enter the beginning of the product's name.");
-		String productString = scan.next();
+		String productString = scan.nextLine();
 		System.out.println(store.retrieveProductInfo(productString));
 	}
 
@@ -268,14 +272,14 @@ public class UserInterface {
 	 */
 	public void retrieveMemberInfo() {
 		System.out.println("Enter the  beginning of a member's name.");
-		String memberString = scan.next();
+		String memberString = scan.nextLine();
 		System.out.println(store.retrieveMemberInfo(memberString));
 	}
 
 	private void printTransactions() {
-		// Update input details.
-		int memberId = 123456;
-		store.printTransactions(memberId);
+		System.out.println("Enter member ID:");
+		String memberString = scan.nextLine();
+		System.out.println(store.printTransactions(memberString));
 	}
 
 	private void listOutstandingOrders() {
