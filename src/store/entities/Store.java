@@ -53,52 +53,46 @@ public class Store {
 		return product;
 	}
 
-	public String checkout(ArrayList<String> productIds,
-	ArrayList<Integer> productQtys) {
+	public String checkout(ArrayList<String> productIds, ArrayList<Integer> productQtys) {
 		double runningTotal = 0;
 		StringBuilder buffer = new StringBuilder();
 		ArrayList<String> reorderList = new ArrayList<String>();
-		
-		if ( productIds.size() != productQtys.size() ) {
+
+		if (productIds.size() != productQtys.size()) {
 			return "Your parameters are mismatched.";
 		}
 
 		buffer.append("\nItem\t\t\tQuantity\t\tUnit Price\t\tPrice\n");
-		
-		for ( int cartIndex = 0; cartIndex < productIds.size(); cartIndex++ ) {
-			Product productBuffer = store.productList.search(productIds.get(
-			cartIndex));
+
+		for (int cartIndex = 0; cartIndex < productIds.size(); cartIndex++) {
+			Product productBuffer = store.productList.search(productIds.get(cartIndex));
 			buffer.append(productBuffer.getName());
 			buffer.append("\t\t\t");
 			buffer.append(Integer.toString(productQtys.get(cartIndex)));
 			buffer.append("\t\t\t");
 			buffer.append(Double.toString(productBuffer.getPrice()));
 			buffer.append("\t\t\t");
-			buffer.append(Double.toString(productBuffer.getPrice() *
-			productQtys.get(cartIndex)));
+			buffer.append(Double.toString(productBuffer.getPrice() * productQtys.get(cartIndex)));
 			buffer.append("\n");
-			runningTotal += ( productBuffer.getPrice() *
-			productQtys.get(cartIndex) );
-			Boolean reorder = productBuffer.setInventory(
-			productBuffer.getInventory() - productQtys.get(cartIndex));
+			runningTotal += (productBuffer.getPrice() * productQtys.get(cartIndex));
+			Boolean reorder = productBuffer.setInventory(productBuffer.getInventory() - productQtys.get(cartIndex));
 			if (reorder) {
 				reorderList.add(productBuffer.getID());
 			}
 		}
 
-		buffer.append("\nCart Total: " + Double.toString(runningTotal) + "\n" );
-		
-		if (! reorderList.isEmpty() ) {
+		buffer.append("\nCart Total: " + Double.toString(runningTotal) + "\n");
+
+		if (!reorderList.isEmpty()) {
 			buffer.append("\n\n");
-			for ( int reorderIndex = 0; reorderIndex < reorderList.size(); reorderIndex++ ) {
+			for (int reorderIndex = 0; reorderIndex < reorderList.size(); reorderIndex++) {
 				Product productToOrder = productList.search(reorderList.get(reorderIndex));
 				Order newOrder = new Order(productToOrder);
 				orderList.addOrder(newOrder);
-				buffer.append( Integer.toString(
-				productToOrder.getReorderThreshold() * 2 ) );
-				buffer.append( " units of " );
+				buffer.append(Integer.toString(productToOrder.getReorderThreshold() * 2));
+				buffer.append(" units of ");
 				buffer.append(productToOrder.getName());
-				buffer.append( " were ordered in " );
+				buffer.append(" were ordered in ");
 				buffer.append(newOrder.getID());
 				buffer.append(".\n");
 			}
@@ -120,8 +114,10 @@ public class Store {
 
 	}
 
-	public String changePrice(int productID, int priceDollars, int priceCents) {
-		return "Successfully changed price on " + productID + " to $" + priceDollars + "." + priceCents + ".";
+	public String changePrice(String productID, double newPrice) {
+		Product product = productList.search(productID);
+		productList.changePrice(productID, newPrice);
+		return "The new price for " + product.getName() + " is: " + product.getPrice();
 	}
 
 	public String retrieveProductInfo(String productString) {

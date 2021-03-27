@@ -3,10 +3,9 @@ package store.ui;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Hashtable;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.StringTokenizer;
-import java.util.ArrayList;
 
 import store.entities.Store;
 
@@ -218,17 +217,16 @@ public class UserInterface {
 		boolean cartNotEmpty = true;
 		ArrayList<String> productIds = new ArrayList<String>();
 		ArrayList<Integer> productQtys = new ArrayList<Integer>();
-		
+
 		while (cartNotEmpty) {
 			System.out.println("Please enter the productId of the item:");
 			productIds.add(scan.next());
 			System.out.println("Enter the quantity:");
 			productQtys.add(scan.nextInt());
-			System.out.println("Do you have another item to checkout "
-			+ "( true / false )?");
+			System.out.println("Do you have another item to checkout " + "( true / false )?");
 			cartNotEmpty = scan.nextBoolean();
 		}
-		System.out.println(store.checkout(productIds,productQtys));
+		System.out.println(store.checkout(productIds, productQtys));
 	}
 
 	private void processShipment() {
@@ -244,11 +242,13 @@ public class UserInterface {
 	}
 
 	private void changePrice() {
-		// Update input details.
-		int productId = 123456;
-		int priceDollars = 10;
-		int priceCents = 0;
-		store.changePrice(productId, priceDollars, priceCents);
+		String productId;
+		double newPrice;
+		System.out.println("Enter ID for the product you would like to change.");
+		productId = scan.next();
+		System.out.println("Enter the new price for the item.");
+		newPrice = scan.nextDouble();
+		System.out.println(store.changePrice(productId, newPrice));
 	}
 
 	private void retrieveProductInfo() {
