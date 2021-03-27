@@ -3,6 +3,7 @@ package store.tests;
 import store.entities.Product;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import store.entities.Member;
 import store.entities.Order;
@@ -27,6 +28,9 @@ public class AutomatedTester {
 	private double[] prices = { 10, 5, 6, 4, 3, 11 };
 	private Product[] products = new Product[6];
 
+	AutomatedTester() {
+		this.store = Store.instance();
+	}
 	/**
 	 * Tests Member creation.
 	 */
@@ -39,40 +43,55 @@ public class AutomatedTester {
 	}
 
 	public void testRemoveMember() {
-		/*
-		 * This value is hard coded which is not ideal, but since we
-		 * expect it to be input by human it might be reasonable.
-		 */
-		store.removeMember("XM0");
+		testEnrollMember();
+		store.removeMember("XM1");
 	}
 	
+	/*
+	 * Test store.addProduct and ensure that new product is present
+	 * in 
+	 */
 	public void testAddProduct() {
-		for ( int addProdIndex = 0; addProdIndex < productNames.length ;
-			addProdIndex++ ) {
-			products[addProdIndex] = store.addProduct(
-			Integer.toString(addProdIndex),
-			productNames[addProdIndex], prices[addProdIndex],
-			addProdIndex + 5, ( addProdIndex + 1 ) * 2 );
-		}
+		final int INITIAL_INVENTORY = 10;
+		final int REORDER_THRESHOLD = 8;
+		Random random = new Random();
+		
+		Product checkoutProduct = store.addProduct(
+		Integer.toString(random.nextInt()), "Dulce de Leche", 7.99,
+		INITIAL_INVENTORY, REORDER_THRESHOLD);
+		assert store.listAllProducts().contains(checkoutProduct.getName());
 	}
 	
+	/*
+	 * Test store.checkOut to ensure that order is added
+	 * and that inventory is updated.
+	 */
 	public void testCheckout() {
+		final int INITIAL_INVENTORY = 10;
+		final int REORDER_THRESHOLD = 8;
+		final int ORDER_QUANTITY = 3;
+		
 		ArrayList<String> productIds = new ArrayList<String>();
 		ArrayList<Integer> productQtys = new ArrayList<Integer>();
-		for ( int testChOutIndex = 0; testChOutIndex < products.length;
-		testChOutIndex++  ) {
-			productIds.add(products[testChOutIndex].getID());
-			productQtys.add(products.length - testChOutIndex);
-		}
-		// Hard coded member again
-		store.checkout("XM1", productIds,productQtys);
-	}
+		Random random = new Random();
 
+		String memberString = store.enrollMember(
+		"Nathan Souer", "Maplewood, MN", "6515555555");
+		Product checkoutProduct = store.addProduct(
+		Integer.toString(random.nextInt()), "Alfajores", 4.99,
+		INITIAL_INVENTORY, REORDER_THRESHOLD);
+		productIds.add(checkoutProduct.getID());
+		productQtys.add(ORDER_QUANTITY);
+		store.checkout(memberString, productIds, productQtys);
+		assert store.listOutstandingOrders().contains(checkoutProduct.getName());
+		assert checkoutProduct.getInventory() ==  (INITIAL_INVENTORY - ORDER_QUANTITY);
+	}
 	public void testProcessShipment() {
 		
 	}	
 	
 	public void testChangePrice() {
+		testAddProduct();
 		store.changePrice(products[0].getID(),
 		products[0].getPrice() + 0.5);
 	}
