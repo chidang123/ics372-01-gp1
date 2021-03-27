@@ -53,7 +53,12 @@ public class Store {
 		return product;
 	}
 
+<<<<<<< Upstream, based on origin/main
 	public String checkout(ArrayList<String> productIds, ArrayList<Integer> productQtys) {
+=======
+	public String checkout(String memberID, ArrayList<String> productIds,
+	ArrayList<Integer> productQtys) {
+>>>>>>> b0e656d Tests WIP
 		double runningTotal = 0;
 		StringBuilder buffer = new StringBuilder();
 		ArrayList<String> reorderList = new ArrayList<String>();
@@ -85,8 +90,15 @@ public class Store {
 
 		if (!reorderList.isEmpty()) {
 			buffer.append("\n\n");
+<<<<<<< Upstream, based on origin/main
 			for (int reorderIndex = 0; reorderIndex < reorderList.size(); reorderIndex++) {
 				Product productToOrder = productList.search(reorderList.get(reorderIndex));
+=======
+			for ( int reorderIndex = 0; reorderIndex < reorderList.size();
+				reorderIndex++ ) {
+				Product productToOrder = productList.search(
+				reorderList.get(reorderIndex));
+>>>>>>> b0e656d Tests WIP
 				Order newOrder = new Order(productToOrder);
 				orderList.addOrder(newOrder);
 				buffer.append(Integer.toString(productToOrder.getReorderThreshold() * 2));

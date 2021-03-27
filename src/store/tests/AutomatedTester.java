@@ -28,25 +28,55 @@ public class AutomatedTester {
 	 * Tests Member creation.
 	 */
 	public void testEnrollMember() {
+		for ( int enrollIndex = 0; enrollIndex < names.length; enrollIndex++ ) {
+			store.enrollMember(names[enrollIndex], addresses[enrollIndex],
+			phones[enrollIndex]);		
+		}
 
 	}
 
 	public void testRemoveMember() {
+		/*
+		 * We need a way to get a member ID for this process without manually
+		 * entering the number. Enroll member could return a Member object
+		 * instead of a String, when whatever receives the object could
+		 * call toString()
+		 */
+	}
+	
+	public void testAddProduct() {
+		for ( int addProdIndex = 0; addProdIndex < productNames.length ;
+			addProdIndex++ ) {
+			store.addProduct(Integer.toString(addProdIndex),
+			productNames[addProdIndex], prices[addProdIndex],
+			addProdIndex + 5, ( addProdIndex + 1 ) * 2 );
+		}
+	}
+	
+	public void testCheckout() {
+		/*
+		 * Again how do we get a list of IDs to checkout without
+		 * manual intervention?
+		 */
 	}
 
 	public void testProcessShipment() {
+		/*
+		 * Again we're depending on human input?
+		 */
+		store.processShipment(String orderID);
 	}
 
-	public void testAddProduct() {
-	}
-
+	
 	public void testChangePrice() {
+		store.changePrice(int productID, int priceDollars, int priceCents);
 	}
-
+	
 	public void testAll() {
 		testEnrollMember();
 		testRemoveMember();
 		testAddProduct();
+		testCheckout();
 		testProcessShipment();
 		testChangePrice();
 	}
