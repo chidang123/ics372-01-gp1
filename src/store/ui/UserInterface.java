@@ -217,7 +217,10 @@ public class UserInterface {
 		boolean cartNotEmpty = true;
 		ArrayList<String> productIds = new ArrayList<String>();
 		ArrayList<Integer> productQtys = new ArrayList<Integer>();
-
+		String memberId = null;
+		
+		System.out.println("Please enter the memberId.");
+		memberId = scan.next();
 		while (cartNotEmpty) {
 			System.out.println("Please enter the productId of the item:");
 			productIds.add(scan.next());
@@ -226,7 +229,7 @@ public class UserInterface {
 			System.out.println("Do you have another item to checkout " + "( true / false )?");
 			cartNotEmpty = scan.nextBoolean();
 		}
-		System.out.println(store.checkout(productIds, productQtys));
+		System.out.println(store.checkout(memberId,productIds,productQtys));
 	}
 
 	private void processShipment() {
