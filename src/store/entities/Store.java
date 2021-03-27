@@ -75,22 +75,34 @@ public class Store {
 		return "Successfully changed price on " + productID + " to $" + priceDollars + "." + priceCents + ".";
 	}
 
-	public String retrieveProductInfo(int productID) {
-		return "Product details for " + productID;
+	public String retrieveProductInfo(String productString) {
+		int count = 0;
+		String productDisplay = "Products beginning with " + productString + ":\n";
+		for (Iterator<Product> iterator = productList.iterator(); iterator.hasNext();) {
+			Product product = iterator.next();
+			if (product.getName().startsWith(productString)) {
+				productDisplay += product.toString() + "\n";
+				count++;
+			}
+		}
+		return productDisplay + "\n" + "Found " + count + " Results";
+
 	}
 
 	/**
 	 * displays a list of members that have names matching the String argument
 	 */
 	public String retrieveMemberInfo(String memberString) {
-		String memberDisplay = "Members Beginning with " + memberString + ":\n";
+		int count = 0;
+		String memberDisplay = "Members beginning with " + memberString + ":\n";
 		for (Iterator<Member> iterator = memberList.iterator(); iterator.hasNext();) {
 			Member member = iterator.next();
 			if (member.getName().startsWith(memberString)) {
 				memberDisplay += member.toString() + "\n";
+				count++;
 			}
 		}
-		return memberDisplay;
+		return memberDisplay + "\n" + "Found " + count + " Results";
 	}
 
 	public String printTransactions(int memberID) {
@@ -147,7 +159,7 @@ public class Store {
 	}
 
 	/**
-	 * @return true iff the data could be saved
+	 * @return true iff the data is saved
 	 */
 	public static boolean save() {
 		try {

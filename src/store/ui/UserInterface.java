@@ -240,9 +240,9 @@ public class UserInterface {
 	}
 
 	private void retrieveProductInfo() {
-		// Update input details.
-		int productId = 123456;
-		System.out.println(store.retrieveProductInfo(productId));
+		System.out.println("Enter the beginning of the product's name.");
+		String productString = scan.next();
+		System.out.println(store.retrieveProductInfo(productString));
 	}
 
 	/**
@@ -252,7 +252,7 @@ public class UserInterface {
 	 * @return display of all members starting with the string
 	 */
 	public void retrieveMemberInfo() {
-		System.out.println("Enter the  beginning of a member's name");
+		System.out.println("Enter the  beginning of a member's name.");
 		String memberString = scan.next();
 		System.out.println(store.retrieveMemberInfo(memberString));
 	}

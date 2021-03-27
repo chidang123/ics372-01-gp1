@@ -1,6 +1,5 @@
 package store.entities;
 
-//Change//Change
 import java.io.Serializable;
 import java.util.Date;
 
