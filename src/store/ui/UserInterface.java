@@ -217,15 +217,10 @@ public class UserInterface {
 		boolean cartNotEmpty = true;
 		ArrayList<String> productIds = new ArrayList<String>();
 		ArrayList<Integer> productQtys = new ArrayList<Integer>();
-<<<<<<< Upstream, based on origin/main
-
-=======
 		String memberId = null;
 		
 		System.out.println("Please enter the memberId.");
 		memberId = scan.next();
-		
->>>>>>> b0e656d Tests WIP
 		while (cartNotEmpty) {
 			System.out.println("Please enter the productId of the item:");
 			productIds.add(scan.next());
@@ -234,11 +229,7 @@ public class UserInterface {
 			System.out.println("Do you have another item to checkout " + "( true / false )?");
 			cartNotEmpty = scan.nextBoolean();
 		}
-<<<<<<< Upstream, based on origin/main
-		System.out.println(store.checkout(productIds, productQtys));
-=======
 		System.out.println(store.checkout(memberId,productIds,productQtys));
->>>>>>> b0e656d Tests WIP
 	}
 
 	private void processShipment() {
@@ -254,7 +245,6 @@ public class UserInterface {
 	}
 
 	private void changePrice() {
-<<<<<<< Upstream, based on origin/main
 		String productId;
 		double newPrice;
 		System.out.println("Enter ID for the product you would like to change.");
@@ -262,12 +252,6 @@ public class UserInterface {
 		System.out.println("Enter the new price for the item.");
 		newPrice = scan.nextDouble();
 		System.out.println(store.changePrice(productId, newPrice));
-=======
-		// Update input details.
-		int productId = 123456;
-		double price = 1.5;
-		store.changePrice(productId, price);
->>>>>>> 793db4a Work in progress on tests.
 	}
 
 	private void retrieveProductInfo() {

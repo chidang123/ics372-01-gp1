@@ -73,7 +73,7 @@ public class AutomatedTester {
 	}	
 	
 	public void testChangePrice() {
-		store.changePrice(Integer.parseInt(products[0].getID()),
+		store.changePrice(products[0].getID(),
 		products[0].getPrice() + 0.5);
 	}
 	

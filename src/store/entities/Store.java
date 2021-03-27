@@ -67,7 +67,7 @@ public class Store {
 		buffer.append("\nItem\t\t\tQuantity\t\tUnit Price\t\tPrice\n");
 
 		for (int cartIndex = 0; cartIndex < productIds.size(); cartIndex++) {
-			productBuffer = store.productList.search(productIds.get(cartIndex));
+			Product productBuffer = store.productList.search(productIds.get(cartIndex));
 			buffer.append(productBuffer.getName());
 			buffer.append("\t\t\t");
 			buffer.append(Integer.toString(productQtys.get(cartIndex)));
