@@ -157,10 +157,15 @@ public class Store {
 
 	}
 
+<<<<<<< Upstream, based on origin/main
 	public String changePrice(String productID, double newPrice) {
 		Product product = productList.search(productID);
 		productList.changePrice(productID, newPrice);
 		return "The new price for " + product.getName() + " is: " + product.getPrice();
+=======
+	public String changePrice(int productID, double price) {
+		return "Successfully changed price on " + productID + " to $" + priceDollars + "." + priceCents + ".";
+>>>>>>> 793db4a Work in progress on tests.
 	}
 
 	public String retrieveProductInfo(String productString) {

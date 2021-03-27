@@ -1,6 +1,9 @@
 package store.tests;
 
 import store.entities.Product;
+
+import java.util.ArrayList;
+
 import store.entities.Member;
 import store.entities.Order;
 import store.entities.Store;
@@ -54,23 +57,24 @@ public class AutomatedTester {
 	}
 	
 	public void testCheckout() {
-		/*
-		 * Again how do we get a list of IDs to checkout without
-		 * manual intervention?
-		 */
+		ArrayList<String> productIds = new ArrayList<String>();
+		ArrayList<Integer> productQtys = new ArrayList<Integer>();
+		for ( int testChOutIndex = 0; testChOutIndex < products.length;
+		testChOutIndex++  ) {
+			productIds.add(products[testChOutIndex].getID());
+			productQtys.add(products.length - testChOutIndex);
+		}
+		// Hard coded member again
+		store.checkout("XM1", productIds,productQtys);
 	}
 
 	public void testProcessShipment() {
-		/*
-		 * Again we're depending on human input?
-		 */
-		store.processShipment(String orderID);
-	}
-
+		
+	}	
 	
 	public void testChangePrice() {
-		/* Human input? */
-		store.changePrice(int productID, int priceDollars, int priceCents);
+		store.changePrice(Integer.parseInt(products[0].getID()),
+		products[0].getPrice() + 0.5);
 	}
 	
 	public void testAll() {

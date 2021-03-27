@@ -254,6 +254,7 @@ public class UserInterface {
 	}
 
 	private void changePrice() {
+<<<<<<< Upstream, based on origin/main
 		String productId;
 		double newPrice;
 		System.out.println("Enter ID for the product you would like to change.");
@@ -261,6 +262,12 @@ public class UserInterface {
 		System.out.println("Enter the new price for the item.");
 		newPrice = scan.nextDouble();
 		System.out.println(store.changePrice(productId, newPrice));
+=======
+		// Update input details.
+		int productId = 123456;
+		double price = 1.5;
+		store.changePrice(productId, price);
+>>>>>>> 793db4a Work in progress on tests.
 	}
 
 	private void retrieveProductInfo() {
