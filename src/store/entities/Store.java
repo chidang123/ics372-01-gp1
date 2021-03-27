@@ -62,15 +62,46 @@ public class Store {
 		double runningTotal = 0;
 		StringBuilder buffer = new StringBuilder();
 		ArrayList<String> reorderList = new ArrayList<String>();
+<<<<<<< Upstream, based on origin/main
 
 		if (productIds.size() != productQtys.size()) {
+=======
+		Transaction memberTransaction = new Transaction(
+		Integer.parseInt(memberID));
+		Product productBuffer = null;
+		
+		if ( productIds.size() != productQtys.size() ) {
+>>>>>>> 028b4c5 Checkout updated.
 			return "Your parameters are mismatched.";
 		}
+		
+		for ( int tranIndex = 0; tranIndex < productIds.size(); tranIndex++ ) {
+			// Get the product based on memberID
+			productBuffer = productList.search(productIds.get(tranIndex));
+			/*
+			 * Create new product because we don't want to impact existing
+			 * inventory.
+			 */
+			productBuffer = new Product(productBuffer.getID(),
+			productBuffer.getName(), productBuffer.getPrice(),
+			productQtys.get(tranIndex), productBuffer.getReorderThreshold());
+			// Add new product to transaction
+			memberTransaction.addProduct(productBuffer);
+		}
+		
+		Member memberBuffer = memberList.search(memberID);		
+		memberBuffer.addMemberTransaction(memberTransaction);
 
 		buffer.append("\nItem\t\t\tQuantity\t\tUnit Price\t\tPrice\n");
+<<<<<<< Upstream, based on origin/main
 
 		for (int cartIndex = 0; cartIndex < productIds.size(); cartIndex++) {
 			Product productBuffer = store.productList.search(productIds.get(cartIndex));
+=======
+		
+		for ( int cartIndex = 0; cartIndex < productIds.size(); cartIndex++ ) {
+			productBuffer = store.productList.search(productIds.get(cartIndex));
+>>>>>>> 028b4c5 Checkout updated.
 			buffer.append(productBuffer.getName());
 			buffer.append("\t\t\t");
 			buffer.append(Integer.toString(productQtys.get(cartIndex)));

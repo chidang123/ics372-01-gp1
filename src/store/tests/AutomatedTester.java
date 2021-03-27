@@ -69,6 +69,7 @@ public class AutomatedTester {
 
 	
 	public void testChangePrice() {
+		/* Human input? */
 		store.changePrice(int productID, int priceDollars, int priceCents);
 	}
 	
