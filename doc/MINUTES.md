@@ -27,3 +27,23 @@ Nathan: 10, 4, & 12
 ## Group Meeting February 26th, 2021 Common Era
 Talked through preliminary class designs, see class_design_notes.md, for us each
 to update sequence diagrams.
+
+## Group Meeting Friday March, 26th, 2021 Common Era
+What's left?
+
+Daniel
+- Print Transaction (#9)
+- Sequence Diagrams (#9)
+
+Rae
+- Process Shipments (Not removing order?)
+- Documentation Updates
+- Automated Tester for Process Shipments
+
+Andrew
+- Documentation Updates / Checkout
+- Automated Tester Enroll, Remove, and Change Price
+
+Nathan
+- Automated Tester Checkout and Add Product
+- Check alignment of tabs in use case 10 and 12
