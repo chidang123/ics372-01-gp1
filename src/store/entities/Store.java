@@ -34,7 +34,7 @@ public class Store {
 	public String enrollMember(String name, String address, String phoneNumber) {
 		Member member = new Member(name, address, phoneNumber);
 		memberList.insertMember(member);
-		return member.toString();
+		return member.getID();
 	}
 
 	public boolean removeMember(String memberID) {
@@ -156,12 +156,12 @@ public class Store {
 
 	public String printTransactions(String memberID) {
 		Member member = memberList.search(memberID);
-		member.
+		return member.toString();
 	}
 
 	public String listOutstandingOrders() {
 		StringBuilder buffer = new StringBuilder();
-		buffer.append("ID\tProduct\tDate\tQuantity\n");
+		buffer.append("ID\tProduct\t\tDate\tQuantity\n");
 		for (Iterator<Order> iterator = orderList.iterator(); iterator.hasNext();) {
 			Order order = (Order) iterator.next();
 			buffer.append(order.getID());
@@ -178,15 +178,15 @@ public class Store {
 
 	public String listAllProducts() {
 		StringBuilder buffer = new StringBuilder();
-		buffer.append("Name\tID\tOn Hand\tPrice\tReorder\n");
+		buffer.append("Name\t\tID\tOn Hand\tPrice\tReorder\n");
 		for (Iterator<Product> iterator = productList.iterator(); iterator.hasNext();) {
 			Product product = (Product) iterator.next();
 			buffer.append(product.getName());
 			buffer.append("\t");
 			buffer.append(product.getID());
-			buffer.append("t");
+			buffer.append("\t");
 			buffer.append(Integer.toString(product.getInventory()));
-			buffer.append("t");
+			buffer.append("\t");
 			buffer.append(Double.toString(product.getPrice()));
 			buffer.append("\t");
 			buffer.append(Integer.toString(product.getReorderThreshold()));
@@ -223,9 +223,5 @@ public class Store {
 			ioe.printStackTrace();
 			return false;
 		}
-	}
-
-	public Iterator<Member> iterator() {
-		return memberList.iterator();
 	}
 }
