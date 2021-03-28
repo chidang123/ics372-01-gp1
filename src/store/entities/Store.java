@@ -3,8 +3,12 @@ package store.entities;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
+import java.util.ListIterator;
 
 //Change
 public class Store {
@@ -59,6 +63,7 @@ public class Store {
 		double runningTotal = 0;
 		StringBuilder buffer = new StringBuilder();
 		ArrayList<String> reorderList = new ArrayList<String>();
+		Transaction transactionBuffer = new Transaction(memberID);
 
 		if (productIds.size() != productQtys.size()) {
 			return "Your parameters are mismatched.";
@@ -81,8 +86,13 @@ public class Store {
 			if (reorder) {
 				reorderList.add(productBuffer.getID());
 			}
+			transactionBuffer.addProduct(new Product(productBuffer.getID(),
+			productBuffer.getName(),productBuffer.getPrice(),
+			productQtys.get(cartIndex),productBuffer.getReorderThreshold()));
 		}
 
+		memberList.search(memberID).addMemberTransaction(transactionBuffer);
+		
 		buffer.append("\nCart Total: " + Double.toString(runningTotal) + "\n");
 
 		if (!reorderList.isEmpty()) {
@@ -154,9 +164,23 @@ public class Store {
 		return memberDisplay + "\n" + "Found " + count + " Results";
 	}
 
-	public String printTransactions(String memberID) {
+	public String printTransactions(String memberID, Date startDate, Date endDate) {
+		int count = 0;
+		DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 		Member member = memberList.search(memberID);
-		return member.toString();
+		String parsedDate = null;
+		String display = member.getName() + "'s transactions\n";
+		for (ListIterator<Transaction> iterator = member.getTransactions().listIterator(); iterator.hasNext();) {
+			Transaction transaction = iterator.next();
+			if ((transaction.getDate().equals(startDate) || transaction.getDate().after(startDate))
+					&& (transaction.getDate().equals(endDate) || transaction.getDate().before(endDate))) {
+				parsedDate = dateFormat.format(transaction.getDate());
+				display += "Transaction ID: " + transaction.getTransactionID() + " , Date: " + parsedDate + " \n";
+				display += transaction.listProducts() + "\n";
+				count++;
+			}
+		}
+		return display + "\n" + "Found " + count + " Results";
 	}
 
 	public String listOutstandingOrders() {
