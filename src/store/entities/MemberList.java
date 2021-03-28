@@ -16,8 +16,12 @@ public class MemberList implements Serializable {
 	private List<Member> members = new LinkedList<Member>();
 
 	/**
-	 * checks whether a member with a given member id exists.
+	 * searches for the given memberId
+	 * 
+	 * @param memberId
+	 * @return the member if it exists, or null if there is no member with that id
 	 */
+
 	public Member search(String memberId) {
 		for (Iterator<Member> iterator = members.iterator(); iterator.hasNext();) {
 			Member member = iterator.next();
@@ -29,16 +33,28 @@ public class MemberList implements Serializable {
 	}
 
 	/**
-	 * inserts a Member into members
+	 * Inserts a member into the memberList
+	 * 
+	 * @param member
 	 */
 	public void insertMember(Member member) {
 		members.add(member);
 	}
 
+	/**
+	 * removes the given member from the list of members
+	 * 
+	 * @param member
+	 */
 	public void removeMember(Member member) {
 		members.remove(members.indexOf(member));
 	}
 
+	/**
+	 * gets an iterator to the list of members
+	 * 
+	 * @return Iterator to the list of members
+	 */
 	public Iterator<Member> iterator() {
 		return members.iterator();
 	}
