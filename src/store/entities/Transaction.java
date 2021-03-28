@@ -6,12 +6,12 @@ import java.util.Date;
 public class Transaction implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Date date;
-	private int memberID;
+	private String memberID;
 	private int transactionID;
 	private static int idCounter;
 	private ProductList productList = new ProductList();;
 
-	public Transaction(int memberID) {
+	public Transaction(String memberID) {
 		this.date = new Date();
 		this.memberID = memberID;
 		this.transactionID = idCounter;
@@ -22,7 +22,7 @@ public class Transaction implements Serializable {
 		return date;
 	}
 
-	public int getMemberID() {
+	public String getMemberID() {
 		return memberID;
 	}
 
@@ -32,5 +32,9 @@ public class Transaction implements Serializable {
 
 	public void addProduct(Product product) {
 		productList.addNewProduct(product);
+	}
+	
+	public String listProducts() {
+		return productList.getBasics();
 	}
 }

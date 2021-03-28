@@ -86,6 +86,18 @@ public class ProductList implements Serializable {
 		return products.iterator();
 	}
 
+	public String getBasics() {
+		double total = 0;
+		String result = "";
+		for (Iterator<Product> iterator = products.iterator(); iterator.hasNext();) {
+			Product product = iterator.next();
+			result += product.getName() + " , " + product.getPrice() + "\n";
+			total += product.getPrice();
+		}
+		result += "Total: " + total;
+		return result;
+	}
+	
 	@Override
 	public String toString() {
 		return products.toString();

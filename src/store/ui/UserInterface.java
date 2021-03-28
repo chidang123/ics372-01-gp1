@@ -3,6 +3,10 @@ package store.ui;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.StringTokenizer;
@@ -106,7 +110,11 @@ public class UserInterface {
 				retrieveMemberInfo();
 				break;
 			case PRINT_TRANSACTIONS:
-				printTransactions();
+				try {
+					printTransactions();
+				} catch (Exception e) {
+					System.out.println(e.toString());
+				}
 				break;
 			case LIST_OUTSTANDING_ORDERS:
 				listOutstandingOrders();
@@ -276,10 +284,30 @@ public class UserInterface {
 		System.out.println(store.retrieveMemberInfo(memberString));
 	}
 
-	private void printTransactions() {
-		System.out.println("Enter member ID:");
-		String memberString = scan.nextLine();
-		System.out.println(store.printTransactions(memberString));
+	public void printTransactions() throws ParseException {
+		boolean done = false;
+		DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+		while (!done) {
+			try {
+				System.out.println("Enter the member ID.");
+				String memberID = scan.nextLine();
+				System.out.println("Please enter the earliest date in the form mm/dd/yyyy.");
+				Date firstDate = (Date) dateFormat.parse(scan.nextLine());
+				System.out.println("Please enter the latest date in the form mm/dd/yyyy.");
+				Date lastDate = (Date) dateFormat.parse(scan.nextLine());
+				if (firstDate.after(lastDate)) {
+					System.out.println(
+							"The earliest date cannot be after the latest date chronologically. Please try again.");
+					continue;
+				}
+				System.out.println(store.printTransactions(memberID, firstDate, lastDate));
+				done = true;
+			} catch (ParseException exception) {
+				System.out.println("You didn't enter the dates in the correct format. Please try again.");
+				continue;
+
+			}
+		}
 	}
 
 	private void listOutstandingOrders() {
