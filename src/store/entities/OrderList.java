@@ -8,6 +8,8 @@ import java.util.ListIterator;
 
 /**
  * maintains a list of Order objects
+ * 
+ * @author Rael Ogega
  */
 public class OrderList implements Iterable<Order>, Serializable {
 	private static final long serialVersionUID = 1L;
@@ -38,6 +40,8 @@ public class OrderList implements Iterable<Order>, Serializable {
 
 	/**
 	 * removes an order that contains a product with the passed ID number
+	 * 
+	 * @param productID id of the product
 	 */
 	public Order removeOrderOnProduct(String productID) {
 		for (ListIterator<Order> iterator = orders.listIterator(); iterator.hasNext();) {
@@ -53,6 +57,8 @@ public class OrderList implements Iterable<Order>, Serializable {
 
 	/**
 	 * checks whether an order with a given ID number exists
+	 * 
+	 * @param orderID id of the order
 	 */
 	public Order search(String orderID) {
 		for (Iterator<Order> iterator = orders.iterator(); iterator.hasNext();) {

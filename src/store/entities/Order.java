@@ -4,6 +4,12 @@ package store.entities;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * Order represents an order for a product being shipped to the store
+ * 
+ * @author Rael Ogega
+ *
+ */
 public class Order implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String id;
@@ -13,6 +19,11 @@ public class Order implements Serializable {
 	private static int idCounter;
 	private Date date;
 
+	/**
+	 * Creates a single order
+	 * 
+	 * @param product the product associated with the order
+	 */
 	public Order(Product product) {
 		this.product = product;
 		newStock = 2 * product.getReorderThreshold();
