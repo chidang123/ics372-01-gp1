@@ -227,7 +227,7 @@ public class UserInterface {
 		ArrayList<String> productIds = new ArrayList<String>();
 		ArrayList<Integer> productQtys = new ArrayList<Integer>();
 		String memberId = null;
-		
+
 		System.out.println("Please enter the memberId.");
 		memberId = scan.nextLine();
 		while (cartNotEmpty) {
@@ -238,14 +238,15 @@ public class UserInterface {
 			System.out.println("Do you have another item to checkout " + "( true / false )?");
 			cartNotEmpty = scan.nextBoolean();
 			scan.nextLine();
-			
+
 		}
-		System.out.println(store.checkout(memberId,productIds,productQtys));
+		System.out.println(store.checkout(memberId, productIds, productQtys));
 	}
 
 	private void processShipment() {
 		System.out.println("Enter the ID of the order");
 		String orderId = scan.nextLine();
+		System.out.println(store.processShipment(orderId));
 		System.out.println("Do you have more products to enter?");
 		String moreShipments = scan.nextLine();
 		while (moreShipments.equals("yes")) {

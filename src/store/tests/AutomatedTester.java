@@ -17,13 +17,15 @@ import store.entities.Store;
  */
 public class AutomatedTester {
 	private Store store;
-	private String[] names = { "n1", "n2", "n3" };
-	private String[] addresses = { "a1", "a2", "a3" };
-	private String[] phones = { "p1", "p2", "p3" };
-	private Member[] members = new Member[3];
-	private String[] productNames = { "t1", "t2", "t3", "t4", "t5", "t6" };
-	private double[] prices = { 10, 5, 6, 4, 3, 11 };
-	private Product[] products = new Product[6];
+	private String[] names = { "Nate", "Nathaniel", "Daniel", "Dan", "Andrew", "Andy", "Keith", "Rae" };
+	private String[] addresses = { "123 Street", "234 Street", "345 Street", "456 Street", "567 Street" };
+	private String[] phones = { "987-654-3210", "876-543-2109", "765-432-1098", "654-321-0987", "543-210-9876" };
+	private Member[] members = new Member[5];
+	private String[] productNames = { "Milk", "Milky Way", "Milk Bar", "Pizza", "Water", "Milk Duds", "Onions",
+			"Tomatoes", "Lettuce", "Grapes", "Tuna", "Apples, Berries", "Pasta", "Rice", "Cereal", "Pickles", "Celery",
+			"Bacon", "Floss" };
+	private double[] prices = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 15, 17, 18, 19, 20 };
+	private Product[] products = new Product[20];
 
 	AutomatedTester() {
 		this.store = Store.instance();
@@ -87,8 +89,11 @@ public class AutomatedTester {
 		assert checkoutProduct.getInventory() == (INITIAL_INVENTORY - ORDER_QUANTITY);
 	}
 
+	/*
+	 * Tests store.processShipment() to ensure that inventory is updated and order
+	 * is removed from list
+	 */
 	public void testProcessShipment() {
-
 	}
 
 	public void testChangePrice() {
