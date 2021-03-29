@@ -30,7 +30,11 @@ public class Member implements Serializable {
 	private List<Transaction> transactions = new LinkedList<Transaction>();
 
 	/**
-	 * constructor
+	 * creates a single member
+	 * 
+	 * @param name    name of the member
+	 * @param address address of the member
+	 * @param phone   phone number of the member
 	 */
 	public Member(String name, String address, String phoneNumber) {
 		this.name = name;
@@ -71,7 +75,7 @@ public class Member implements Serializable {
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
-	
+
 	public List<Transaction> getTransactions() {
 		return transactions;
 	}
@@ -82,6 +86,14 @@ public class Member implements Serializable {
 	public void addMemberTransaction(Transaction transaction) {
 		transactions.add(transaction);
 	}
+
+	/**
+	 * returns the transaction Id and date of every transaction between two dates
+	 * 
+	 * @param startDate
+	 * @param endDate
+	 * @return a string of all transaction Ids and date between two dates
+	 */
 
 	public String getTransactionInfo(Date startDate, Date endDate) {
 		String result = name + "'s transactions\n";
@@ -96,6 +108,11 @@ public class Member implements Serializable {
 		return result;
 	}
 
+	/**
+	 * returns an iterator of the list of transactions
+	 * 
+	 * @return iterator to list of transactions iterator
+	 */
 	public Iterator<Transaction> iterator() {
 		return transactions.iterator();
 	}
