@@ -3,11 +3,11 @@ package store.ui;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Date;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
@@ -54,7 +54,7 @@ public class UserInterface {
 			return userInterface;
 		}
 	}
-	
+
 	private boolean yesOrNo(String prompt) {
 		String more = getToken(prompt + " (Y|y)[es] or anything else for no");
 		if (more.charAt(0) != 'y' && more.charAt(0) != 'Y') {
@@ -93,15 +93,11 @@ public class UserInterface {
 			cnfe.printStackTrace();
 		}
 	}
-/*
-	private UserInterface() {
-		if (yesOrNo("Look for saved data and use it?")) {
-			retrieve();
-		} else {
-			store = Store.instance();
-		}
-	}
-*/
+
+	/*
+	 * private UserInterface() { if (yesOrNo("Look for saved data and use it?")) {
+	 * retrieve(); } else { store = Store.instance(); } }
+	 */
 	public void logo() {
 		System.out.println("\n\n" + "                  WELCOME TO THE\n"
 				+ "   ____  _____ ____    ____  _____     _______ ____  \n"
@@ -185,15 +181,10 @@ public class UserInterface {
 
 			/*
 			 * Remove sleep after methods are complete.
-
-			try {
-				Thread.sleep(5000);
-			} catch (InterruptedException ex) {
-				Thread.currentThread().interrupt();
-			}
-			logo();
-			help();
-			*/
+			 * 
+			 * try { Thread.sleep(5000); } catch (InterruptedException ex) {
+			 * Thread.currentThread().interrupt(); } logo(); help();
+			 */
 			System.out.println("\n\nEnter 14 for help.");
 		}
 
@@ -238,7 +229,7 @@ public class UserInterface {
 			String address = scan.nextLine();
 			System.out.println("Enter the phone number of the new member: ");
 			String phoneNumber = scan.nextLine();
-			System.out.println(store.enrollMember(name, address, phoneNumber));
+			System.out.println(store.enrollMember(name, address, phoneNumber, true));
 		} else if (feePaid.equals("no")) {
 			System.out.println("The member was not added because they did not pay the fee");
 		} else {

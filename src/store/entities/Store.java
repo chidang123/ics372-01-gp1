@@ -46,8 +46,8 @@ public class Store implements Serializable {
 		return memberList.search(memberId);
 	}
 
-	public String enrollMember(String name, String address, String phoneNumber) {
-		Member member = new Member(name, address, phoneNumber);
+	public String enrollMember(String name, String address, String phoneNumber, boolean feePaid) {
+		Member member = new Member(name, address, phoneNumber, feePaid);
 		memberList.insertMember(member);
 		return member.getID();
 	}
@@ -253,7 +253,7 @@ public class Store implements Serializable {
 			return null;
 		}
 	}
-	
+
 	/**
 	 * @return true iff the data is saved
 	 */

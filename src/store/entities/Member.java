@@ -25,6 +25,7 @@ public class Member implements Serializable {
 	private String address;
 	private Calendar dateJoined;
 	private String phoneNumber;
+	boolean feePaid;
 	private static final String MEMBER_STRING = "XM";
 	private static int idCounter;
 	private List<Transaction> transactions = new LinkedList<Transaction>();
@@ -36,12 +37,21 @@ public class Member implements Serializable {
 	 * @param address address of the member
 	 * @param phone   phone number of the member
 	 */
-	public Member(String name, String address, String phoneNumber) {
+	public Member(String name, String address, String phoneNumber, boolean feePaid) {
 		this.name = name;
 		this.address = address;
 		this.dateJoined = new GregorianCalendar();
 		this.phoneNumber = phoneNumber;
+		this.feePaid = feePaid;
 		id = MEMBER_STRING + ++idCounter;
+	}
+
+	public boolean getFeePaid() {
+		return feePaid;
+	}
+
+	public void setFeePaid(boolean feePaid) {
+		this.feePaid = feePaid;
 	}
 
 	public String getID() {
