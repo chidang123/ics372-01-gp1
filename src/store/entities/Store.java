@@ -212,7 +212,7 @@ public class Store implements Serializable {
 		for (Iterator<Product> iterator = productList.iterator(); iterator.hasNext();) {
 			Product product = (Product) iterator.next();
 			buffer.append(product.getName());
-			buffer.append("\t");
+			buffer.append("\t\t");
 			buffer.append(product.getID());
 			buffer.append("\t");
 			buffer.append(Integer.toString(product.getInventory()));
@@ -230,7 +230,7 @@ public class Store implements Serializable {
 	 */
 	public String listAllMembers() {
 		Iterator<Member> iterator = memberList.iterator();
-		String memberDisplay = "List of members (name, address, phone, ID number)";
+		String memberDisplay = "List of members (name, address, phone, ID number)\n";
 		while (iterator.hasNext()) {
 			Member member = iterator.next();
 			memberDisplay += member.toString() + "\n";
