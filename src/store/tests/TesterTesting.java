@@ -8,8 +8,9 @@ package store.tests;
 public class TesterTesting {
 	public static void main(String[] args) {
 		AutomatedTester quisCustodietIpsosCustodes = new AutomatedTester();
-		quisCustodietIpsosCustodes.testCheckout();	
+//		quisCustodietIpsosCustodes.testRemoveMember();
 		quisCustodietIpsosCustodes.testAddProduct();
+		quisCustodietIpsosCustodes.testCheckout();	
 		System.out.println("If you see this, both tests have passed.");
 	}
 
