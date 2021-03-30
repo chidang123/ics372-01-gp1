@@ -1,8 +1,11 @@
 package store.entities;
 
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -11,7 +14,8 @@ import java.util.Iterator;
 import java.util.ListIterator;
 
 //Change
-public class Store {
+public class Store implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private static Store store;
 	private MemberList memberList = new MemberList();
 	private ProductList productList = new ProductList();
@@ -232,6 +236,22 @@ public class Store {
 		return memberDisplay;
 	}
 
+	public static Store retrieve() {
+		try {
+			FileInputStream file = new FileInputStream("StoreData");
+			ObjectInputStream input = new ObjectInputStream(file);
+			store = (Store) input.readObject();
+			Member.retrieve(input);// Check this
+			return store;
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+			return null;
+		} catch (ClassNotFoundException cnfe) {
+			cnfe.printStackTrace();
+			return null;
+		}
+	}
+	
 	/**
 	 * @return true iff the data is saved
 	 */

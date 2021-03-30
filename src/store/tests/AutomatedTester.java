@@ -1,7 +1,6 @@
 package store.tests;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import store.entities.Member;
 import store.entities.Product;
@@ -48,22 +47,28 @@ public class AutomatedTester {
 
 	}
 
+	/*
+	 * Test store.removeMember and ensure that it is no longer present in the 
+	 * output.
+	 */
 	public void testRemoveMember() {
-		testEnrollMember();
-		store.removeMember("XM1");
+		Member memberBuffer = members[members.length - 1];
+		store.removeMember(members[members.length - 1].getID());
+		assert !store.retrieveMemberInfo(memberBuffer.getName()).contains(memberBuffer.getName());
 	}
-
+	
 	/*
 	 * Test store.addProduct and ensure that new product is present in
 	 */
 	public void testAddProduct() {
 		final int INITIAL_INVENTORY = 10;
 		final int REORDER_THRESHOLD = 8;
-		Random random = new Random();
 
-		Product checkoutProduct = store.addProduct(Integer.toString(random.nextInt()), "Dulce de Leche", 7.99,
-				INITIAL_INVENTORY, REORDER_THRESHOLD);
-		assert store.listAllProducts().contains(checkoutProduct.getName());
+		for ( int addIndex = 0; addIndex < products.length - 1; addIndex++ ) {
+			products[addIndex] = store.addProduct(Integer.toString(addIndex), productNames[addIndex], prices[addIndex], INITIAL_INVENTORY, REORDER_THRESHOLD);
+			assert store.listAllProducts().contains(products[addIndex].getName());
+		}
+
 	}
 
 	/*
@@ -71,22 +76,17 @@ public class AutomatedTester {
 	 * updated.
 	 */
 	public void testCheckout() {
-		final int INITIAL_INVENTORY = 10;
-		final int REORDER_THRESHOLD = 8;
 		final int ORDER_QUANTITY = 3;
-
 		ArrayList<String> productIds = new ArrayList<String>();
 		ArrayList<Integer> productQtys = new ArrayList<Integer>();
-		Random random = new Random();
-
-		String memberString = store.enrollMember("Nathan Souer", "Maplewood, MN", "6515555555");
-		Product checkoutProduct = store.addProduct(Integer.toString(random.nextInt()), "Alfajores", 4.99,
-				INITIAL_INVENTORY, REORDER_THRESHOLD);
-		productIds.add(checkoutProduct.getID());
+		int inventoryBuffer = products[0].getInventory();
+		
+		productIds.add(products[0].getID());
 		productQtys.add(ORDER_QUANTITY);
-		store.checkout(memberString, productIds, productQtys);
-		assert store.listOutstandingOrders().contains(checkoutProduct.getName());
-		assert checkoutProduct.getInventory() == (INITIAL_INVENTORY - ORDER_QUANTITY);
+		
+		store.checkout(members[0].getID(), productIds, productQtys);
+		assert store.listOutstandingOrders().contains(products[0].getName());
+		assert products[0].getInventory() == (inventoryBuffer - ORDER_QUANTITY);
 	}
 
 	/*

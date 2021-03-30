@@ -47,6 +47,45 @@ public class UserInterface {
 			return userInterface;
 		}
 	}
+	
+	private boolean yesOrNo(String prompt) {
+		String more = getToken(prompt + " (Y|y)[es] or anything else for no");
+		if (more.charAt(0) != 'y' && more.charAt(0) != 'Y') {
+			return false;
+		}
+		return true;
+	}
+
+	public String getToken(String prompt) {
+		do {
+			try {
+				System.out.println(prompt);
+				String line = reader.readLine();
+				StringTokenizer tokenizer = new StringTokenizer(line, "\n\r\f");
+				if (tokenizer.hasMoreTokens()) {
+					return tokenizer.nextToken();
+				}
+			} catch (IOException ioe) {
+				System.exit(0);
+			}
+		} while (true);
+	}
+
+	private void retrieve() {
+		try {
+			if (store == null) {
+				store = Store.retrieve();
+				if (store != null) {
+					System.out.println(" The store has been successfully retrieved from the file StoreData \n");
+				} else {
+					System.out.println("File doesnt exist; creating new library");
+					store = Store.instance();
+				}
+			}
+		} catch (Exception cnfe) {
+			cnfe.printStackTrace();
+		}
+	}
 
 	private UserInterface() {
 		System.out.println("Do you want to load from disk?");
@@ -135,7 +174,7 @@ public class UserInterface {
 
 			/*
 			 * Remove sleep after methods are complete.
-			 */
+
 			try {
 				Thread.sleep(5000);
 			} catch (InterruptedException ex) {
@@ -143,6 +182,8 @@ public class UserInterface {
 			}
 			logo();
 			help();
+			*/
+			System.out.println("Remember enter 14 for help.");
 		}
 
 		System.exit(0);
