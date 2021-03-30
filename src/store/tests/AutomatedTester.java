@@ -1,7 +1,6 @@
 package store.tests;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Random;
 
 import store.entities.Member;
@@ -37,15 +36,10 @@ public class AutomatedTester {
 	 */
 	public void testEnrollMember() {
 		for (int count = 0; count < members.length; count++) {
-			String memberId = store.enrollMember(addresses[count], names[count], phones[count]);
-			assert memberId.equals("XM" + Integer.toString(count));
-		}
-		int subscript = 0;
-		for (Iterator<Member> memberIterator = store.memberIterator(); memberIterator.hasNext();) {
-			Member member = memberIterator.next();
-			assert member.getName().equals(names[subscript]);
-			assert member.getAddress().equals(addresses[subscript]);
-			assert member.getPhoneNumber().equals(phones[subscript++]);
+			String memberId = store.enrollMember(names[count], addresses[count], phones[count]);
+			assert (store.memberListSearch(memberId).getName()).equals(names[count]);
+			assert (store.memberListSearch(memberId).getPhoneNumber()).equals(phones[count]);
+			assert (store.memberListSearch(memberId).getAddress()).equals(addresses[count]);
 		}
 
 	}

@@ -35,8 +35,11 @@ public class Store {
 		}
 	}
 
-	public Iterator<Member> memberIterator() {
-		return memberList.iterator();
+	/**
+	 * checks whether a member with a given ID number exists in the list of members
+	 */
+	public Member memberListSearch(String memberId) {
+		return memberList.search(memberId);
 	}
 
 	public String enrollMember(String name, String address, String phoneNumber) {
