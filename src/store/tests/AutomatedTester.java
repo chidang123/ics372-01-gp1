@@ -36,14 +36,10 @@ public class AutomatedTester {
 	 */
 	public void testEnrollMember() {
 		for (int count = 0; count < members.length; count++) {
-			members[count].setAddress(addresses[count]);
-			members[count].setName(names[count]);
-			members[count].setPhoneNumber(phones[count]);
-			String memberId = store.enrollMember(addresses[count], names[count], phones[count]);
-			assert members[count].getName().equals(names[count]);
-			assert members[count].getAddress().equals(addresses[count]);
-			assert members[count].getPhoneNumber().equals(phones[count]);
-			assert memberId.equals("XM" + Integer.toString(count));
+			String memberId = store.enrollMember(names[count], addresses[count], phones[count]);
+			assert (store.memberListSearch(memberId).getName()).equals(names[count]);
+			assert (store.memberListSearch(memberId).getPhoneNumber()).equals(phones[count]);
+			assert (store.memberListSearch(memberId).getAddress()).equals(addresses[count]);
 		}
 
 	}

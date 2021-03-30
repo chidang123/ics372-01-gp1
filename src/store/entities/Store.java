@@ -35,6 +35,13 @@ public class Store {
 		}
 	}
 
+	/**
+	 * checks whether a member with a given ID number exists in the list of members
+	 */
+	public Member memberListSearch(String memberId) {
+		return memberList.search(memberId);
+	}
+
 	public String enrollMember(String name, String address, String phoneNumber) {
 		Member member = new Member(name, address, phoneNumber);
 		memberList.insertMember(member);
@@ -57,9 +64,7 @@ public class Store {
 		return product;
 	}
 
-
-	public String checkout(String memberID, ArrayList<String> productIds,
-	ArrayList<Integer> productQtys) {
+	public String checkout(String memberID, ArrayList<String> productIds, ArrayList<Integer> productQtys) {
 		double runningTotal = 0;
 		StringBuilder buffer = new StringBuilder();
 		ArrayList<String> reorderList = new ArrayList<String>();
@@ -86,21 +91,18 @@ public class Store {
 			if (reorder) {
 				reorderList.add(productBuffer.getID());
 			}
-			transactionBuffer.addProduct(new Product(productBuffer.getID(),
-			productBuffer.getName(),productBuffer.getPrice(),
-			productQtys.get(cartIndex),productBuffer.getReorderThreshold()));
+			transactionBuffer.addProduct(new Product(productBuffer.getID(), productBuffer.getName(),
+					productBuffer.getPrice(), productQtys.get(cartIndex), productBuffer.getReorderThreshold()));
 		}
 
 		memberList.search(memberID).addMemberTransaction(transactionBuffer);
-		
+
 		buffer.append("\nCart Total: " + Double.toString(runningTotal) + "\n");
 
 		if (!reorderList.isEmpty()) {
 			buffer.append("\n\n");
-			for ( int reorderIndex = 0; reorderIndex < reorderList.size();
-				reorderIndex++ ) {
-				Product productToOrder = productList.search(
-				reorderList.get(reorderIndex));
+			for (int reorderIndex = 0; reorderIndex < reorderList.size(); reorderIndex++) {
+				Product productToOrder = productList.search(reorderList.get(reorderIndex));
 				Order newOrder = new Order(productToOrder);
 				orderList.addOrder(newOrder);
 				buffer.append(Integer.toString(productToOrder.getReorderThreshold() * 2));
