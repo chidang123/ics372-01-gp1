@@ -97,8 +97,10 @@ public class AutomatedTester {
 	}
 
 	public void testChangePrice() {
-		testAddProduct();
+		Product productBuffer = products[0];
+//		testAddProduct();
 		store.changePrice(products[0].getID(), products[0].getPrice() + 0.5);
+		assert store.retrieveProductInfo(products[0].getID()).contains(String.valueOf(productBuffer.getPrice()));
 	}
 
 	public void testAll() {
