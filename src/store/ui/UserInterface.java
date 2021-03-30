@@ -15,7 +15,7 @@ import store.entities.Store;
 
 public class UserInterface {
 	private static UserInterface userInterface;
-	private static Store store = Store.instance();
+	private static Store store;
 	private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 	private static final int EXIT = 0;
 	private static final int ENROLL_MEMBER = 1;
@@ -33,7 +33,14 @@ public class UserInterface {
 	private static final int SAVE = 13;
 	private static final int HELP = 14;
 
-	// Keith Added
+	private UserInterface() {
+		if (yesOrNo("Look for saved data and  use it?")) {
+			retrieve();
+		} else {
+			store = Store.instance();
+		}
+	}
+
 	private Scanner scan = new Scanner(System.in);
 
 	public static void main(String[] args) {
@@ -76,7 +83,7 @@ public class UserInterface {
 			if (store == null) {
 				store = Store.retrieve();
 				if (store != null) {
-					System.out.println(" The store has been successfully retrieved from the file StoreData \n");
+					System.out.println("The store has been successfully retrieved from the file StoreData.\n");
 				} else {
 					System.out.println("File doesnt exist; creating new library");
 					store = Store.instance();
@@ -86,11 +93,15 @@ public class UserInterface {
 			cnfe.printStackTrace();
 		}
 	}
-
+/*
 	private UserInterface() {
-		System.out.println("Do you want to load from disk?");
+		if (yesOrNo("Look for saved data and use it?")) {
+			retrieve();
+		} else {
+			store = Store.instance();
+		}
 	}
-
+*/
 	public void logo() {
 		System.out.println("\n\n" + "                  WELCOME TO THE\n"
 				+ "   ____  _____ ____    ____  _____     _______ ____  \n"
@@ -168,7 +179,7 @@ public class UserInterface {
 				save();
 				break;
 			case HELP:
-				// Help will print because of loop
+				help();
 				break;
 			}
 
@@ -183,7 +194,7 @@ public class UserInterface {
 			logo();
 			help();
 			*/
-			System.out.println("Remember enter 14 for help.");
+			System.out.println("\n\nEnter 14 for help.");
 		}
 
 		System.exit(0);
@@ -294,6 +305,8 @@ public class UserInterface {
 			System.out.println("Enter the ID of the order");
 			orderId = scan.nextLine();
 			System.out.println(store.processShipment(orderId));
+			System.out.println("Do you have more products to enter?");
+			moreShipments = scan.nextLine();
 		}
 	}
 
@@ -360,7 +373,7 @@ public class UserInterface {
 	 * Displays all members
 	 */
 	public void listAllMembers() {
-		store.listAllMembers();
+		System.out.println(store.listAllMembers());
 	}
 
 	private void listAllProducts() {
@@ -369,14 +382,14 @@ public class UserInterface {
 
 	/**
 	 * Method to be called for saving the Library object. Uses the appropriate
-	 * Library method for saving.
+	 * LibrUserInterface()ary method for saving.
 	 * 
 	 */
 	private void save() {
 		if (Store.save()) {
-			System.out.println(" The library has been successfully saved in the file LibraryData \n");
+			System.out.println("The store has been successfully saved in the file StoreData \n");
 		} else {
-			System.out.println(" There has been an error in saving \n");
+			System.out.println("There has been an error in saving \n");
 		}
 	}
 }

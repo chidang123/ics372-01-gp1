@@ -36,6 +36,7 @@ public class AutomatedTester {
 	public void testEnrollMember() {
 		for (int count = 0; count < members.length; count++) {
 			String memberId = store.enrollMember(names[count], addresses[count], phones[count]);
+			members[count] = store.memberListSearch(memberId);
 			assert (store.memberListSearch(memberId).getName()).equals(names[count]);
 			assert (store.memberListSearch(memberId).getPhoneNumber()).equals(phones[count]);
 			assert (store.memberListSearch(memberId).getAddress()).equals(addresses[count]);
@@ -50,7 +51,8 @@ public class AutomatedTester {
 	public void testRemoveMember() {
 		Member memberBuffer = members[members.length - 1];
 		store.removeMember(members[members.length - 1].getID());
-		assert !store.retrieveMemberInfo(memberBuffer.getName()).contains(memberBuffer.getName());
+		Boolean notDeleted = store.retrieveMemberInfo(memberBuffer.getName()).contains(memberBuffer.getID());
+		assert ! notDeleted;
 	}
 	
 	/*
@@ -90,6 +92,7 @@ public class AutomatedTester {
 	 * is removed from list
 	 */
 	public void testProcessShipment() {
+		
 	}
 
 	public void testChangePrice() {
