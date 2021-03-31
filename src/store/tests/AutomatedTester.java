@@ -16,19 +16,14 @@ import store.entities.Store;
  */
 public class AutomatedTester {
 	private Store store;
-	private String[] names = { "Nate", "Nathaniel", "Daniel", "Dan", "Andrew",
-			"Andy", "Keith", "Rae" };
-	private String[] addresses = { "123 Street", "234 Street", "345 Street",
-			"456 Street", "567 Street" };
-	private String[] phones = { "987-654-3210", "876-543-2109", "765-432-1098",
-			"654-321-0987", "543-210-9876" };
+	private String[] names = { "Nate", "Nathaniel", "Daniel", "Dan", "Andrew", "Andy", "Keith", "Rae" };
+	private String[] addresses = { "123 Street", "234 Street", "345 Street", "456 Street", "567 Street" };
+	private String[] phones = { "987-654-3210", "876-543-2109", "765-432-1098", "654-321-0987", "543-210-9876" };
 	private Member[] members = new Member[5];
-	private String[] productNames = { "Milk", "Milky Way", "Milk Bar", "Pizza",
-			"Water", "Milk Duds", "Onions", "Tomatoes", "Lettuce", "Grapes",
-			"Tuna", "Apples, Berries", "Pasta", "Rice", "Cereal", "Pickles",
-			"Celery", "Bacon", "Floss" };
-	private double[] prices = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
-			15, 15, 17, 18, 19, 20 };
+	private String[] productNames = { "Milk", "Milky Way", "Milk Bar", "Pizza", "Water", "Milk Duds", "Onions",
+			"Tomatoes", "Lettuce", "Grapes", "Tuna", "Apples, Berries", "Pasta", "Rice", "Cereal", "Pickles", "Celery",
+			"Bacon", "Floss" };
+	private double[] prices = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 15, 17, 18, 19, 20 };
 	private Product[] products = new Product[20];
 
 	AutomatedTester() {
@@ -40,15 +35,11 @@ public class AutomatedTester {
 	 */
 	public void testEnrollMember() {
 		for (int count = 0; count < members.length; count++) {
-			String memberId = store.enrollMember(names[count], addresses[count],
-					phones[count], true);
+			String memberId = store.enrollMember(names[count], addresses[count], phones[count], true);
 			members[count] = store.memberListSearch(memberId);
-			assert (store.memberListSearch(memberId).getName())
-					.equals(names[count]);
-			assert (store.memberListSearch(memberId).getPhoneNumber())
-					.equals(phones[count]);
-			assert (store.memberListSearch(memberId).getAddress())
-					.equals(addresses[count]);
+			assert (store.memberListSearch(memberId).getName()).equals(names[count]);
+			assert (store.memberListSearch(memberId).getPhoneNumber()).equals(phones[count]);
+			assert (store.memberListSearch(memberId).getAddress()).equals(addresses[count]);
 		}
 
 	}
@@ -60,8 +51,7 @@ public class AutomatedTester {
 	public void testRemoveMember() {
 		Member memberBuffer = members[members.length - 1];
 		store.removeMember(members[members.length - 1].getID());
-		Boolean notDeleted = store.retrieveMemberInfo(memberBuffer.getName())
-				.contains(memberBuffer.getID());
+		Boolean notDeleted = store.retrieveMemberInfo(memberBuffer.getName()).contains(memberBuffer.getID());
 		assert !notDeleted;
 	}
 
@@ -73,11 +63,9 @@ public class AutomatedTester {
 		final int REORDER_THRESHOLD = 8;
 
 		for (int addIndex = 0; addIndex < products.length - 1; addIndex++) {
-			products[addIndex] = store.addProduct(Integer.toString(addIndex),
-					productNames[addIndex], prices[addIndex], INITIAL_INVENTORY,
-					REORDER_THRESHOLD);
-			assert store.listAllProducts()
-					.contains(products[addIndex].getName());
+			products[addIndex] = store.addProduct(Integer.toString(addIndex), productNames[addIndex], prices[addIndex],
+					INITIAL_INVENTORY, REORDER_THRESHOLD);
+			assert store.listAllProducts().contains(products[addIndex].getName());
 		}
 
 	}
@@ -101,8 +89,8 @@ public class AutomatedTester {
 	}
 
 	/*
-	 * Tests store.processShipment() to ensure that inventory is updated and
-	 * order is removed from list
+	 * Tests store.processShipment() to ensure that inventory is updated and order
+	 * is removed from list
 	 */
 	public void testProcessShipment() {
 		final int ORDER_QUANTITY = 3;
@@ -117,20 +105,17 @@ public class AutomatedTester {
 		// Order should be there after checkout
 		assert (orderId != null);
 		store.processShipment(orderId);
-		;
+
 		// Order should no longer be there after processShipment()
 		assert (store.orderListSearch(products[1].getID()) == null);
 		// New inventory will be the products added from the shipment minus the
 		// purchased products by the member
 		assert (store.productListSearch(products[1].getID())
-				.getInventory() == (initialInventory
-						+ (2 * products[1].getReorderThreshold())
-						- ORDER_QUANTITY));
+				.getInventory() == (initialInventory + (2 * products[1].getReorderThreshold()) - ORDER_QUANTITY));
 	}
 
 	public void testChangePrice() {
 		Product productBuffer = products[0];
-//		testAddProduct();
 		store.changePrice(products[0].getID(), products[0].getPrice() + 0.5);
 		assert store.retrieveProductInfo(products[0].getID()).contains(String.valueOf(productBuffer.getPrice()));
 	}
