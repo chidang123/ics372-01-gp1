@@ -78,14 +78,14 @@ public class AutomatedTester {
 		final int ORDER_QUANTITY = 3;
 		ArrayList<String> productIds = new ArrayList<String>();
 		ArrayList<Integer> productQtys = new ArrayList<Integer>();
-		int inventoryBuffer = products[0].getInventory();
+		int inventoryBuffer = products[1].getInventory();
 
-		productIds.add(products[0].getID());
+		productIds.add(products[1].getID());
 		productQtys.add(ORDER_QUANTITY);
 
 		store.checkout(members[0].getID(), productIds, productQtys);
-		assert store.listOutstandingOrders().contains(products[0].getName());
-		assert products[0].getInventory() == (inventoryBuffer - ORDER_QUANTITY);
+		assert store.listOutstandingOrders().contains(products[1].getName());
+		assert products[1].getInventory() == (inventoryBuffer - ORDER_QUANTITY);
 	}
 
 	/*
@@ -93,31 +93,23 @@ public class AutomatedTester {
 	 * is removed from list
 	 */
 	public void testProcessShipment() {
-		final int ORDER_QUANTITY = 3;
-		ArrayList<String> productIds = new ArrayList<String>();
-		ArrayList<Integer> productQtys = new ArrayList<Integer>();
-		int initialInventory = products[1].getInventory();
-		productIds.add(products[1].getID());
-		productQtys.add(ORDER_QUANTITY);
-		store.checkout(members[0].getID(), productIds, productQtys);
-		// Use the product to get the orderId
-		String orderId = store.orderListSearch(products[1].getID()).getID();
+		int initialInventory = products[0].getInventory();
+		String orderId = store.orderListSearch(products[0].getID()).getID();
 		// Order should be there after checkout
 		assert (orderId != null);
 		store.processShipment(orderId);
 
 		// Order should no longer be there after processShipment()
-		assert (store.orderListSearch(products[1].getID()) == null);
-		// New inventory will be the products added from the shipment minus the
-		// purchased products by the member
-		assert (store.productListSearch(products[1].getID())
-				.getInventory() == (initialInventory + (2 * products[1].getReorderThreshold()) - ORDER_QUANTITY));
+		assert (store.orderListSearch(products[0].getID()) == null);
+		// New inventory will be the products added from the shipment
+		assert (store.productListSearch(products[0].getID())
+						.getInventory() == (initialInventory + (2 * products[0].getReorderThreshold())));
 	}
 
 	public void testChangePrice() {
 		Product productBuffer = products[0];
 		store.changePrice(products[0].getID(), products[0].getPrice() + 0.5);
-		assert store.retrieveProductInfo(products[0].getID()).contains(String.valueOf(productBuffer.getPrice()));
+		assert store.retrieveProductInfo(products[0].getName()).contains(String.valueOf(productBuffer.getPrice() + 0.5));
 	}
 
 	public void testAll() {
