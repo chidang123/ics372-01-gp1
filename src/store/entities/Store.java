@@ -40,13 +40,33 @@ public class Store implements Serializable {
 	}
 
 	/**
-	 * checks whether a member with a given ID number exists in the list of members
+	 * checks whether a member with a given ID number exists in the list of
+	 * members
 	 */
 	public Member memberListSearch(String memberId) {
 		return memberList.search(memberId);
 	}
 
-	public String enrollMember(String name, String address, String phoneNumber, boolean feePaid) {
+	/**
+	 * 
+	 * @param productId associated with the order
+	 * @return Order associated with the product
+	 */
+	public Order orderListSearch(String productId) {
+		return orderList.searchByProduct(productId);
+	}
+
+	/**
+	 * 
+	 * @param productId of the Product being searched
+	 * @return the Product if it's found
+	 */
+	public Product productListSearch(String productId) {
+		return productList.search(productId);
+	}
+
+	public String enrollMember(String name, String address, String phoneNumber,
+			boolean feePaid) {
 		Member member = new Member(name, address, phoneNumber, feePaid);
 		memberList.insertMember(member);
 		return member.getID();
@@ -62,13 +82,16 @@ public class Store implements Serializable {
 		}
 	}
 
-	public Product addProduct(String id, String name, double price, int inventory, int reorderThreshold) {
-		Product product = new Product(id, name, price, inventory, reorderThreshold);
+	public Product addProduct(String id, String name, double price,
+			int inventory, int reorderThreshold) {
+		Product product = new Product(id, name, price, inventory,
+				reorderThreshold);
 		productList.addNewProduct(product);
 		return product;
 	}
 
-	public String checkout(String memberID, ArrayList<String> productIds, ArrayList<Integer> productQtys) {
+	public String checkout(String memberID, ArrayList<String> productIds,
+			ArrayList<Integer> productQtys) {
 		double runningTotal = 0;
 		StringBuilder buffer = new StringBuilder();
 		ArrayList<String> reorderList = new ArrayList<String>();
@@ -81,22 +104,28 @@ public class Store implements Serializable {
 		buffer.append("\nItem\t\t\tQuantity\t\tUnit Price\t\tPrice\n");
 
 		for (int cartIndex = 0; cartIndex < productIds.size(); cartIndex++) {
-			Product productBuffer = store.productList.search(productIds.get(cartIndex));
+			Product productBuffer = store.productList
+					.search(productIds.get(cartIndex));
 			buffer.append(productBuffer.getName());
 			buffer.append("\t\t\t");
 			buffer.append(Integer.toString(productQtys.get(cartIndex)));
 			buffer.append("\t\t\t");
 			buffer.append(Double.toString(productBuffer.getPrice()));
 			buffer.append("\t\t\t");
-			buffer.append(Double.toString(productBuffer.getPrice() * productQtys.get(cartIndex)));
+			buffer.append(Double.toString(
+					productBuffer.getPrice() * productQtys.get(cartIndex)));
 			buffer.append("\n");
-			runningTotal += (productBuffer.getPrice() * productQtys.get(cartIndex));
-			Boolean reorder = productBuffer.setInventory(productBuffer.getInventory() - productQtys.get(cartIndex));
+			runningTotal += (productBuffer.getPrice()
+					* productQtys.get(cartIndex));
+			Boolean reorder = productBuffer.setInventory(
+					productBuffer.getInventory() - productQtys.get(cartIndex));
 			if (reorder) {
 				reorderList.add(productBuffer.getID());
 			}
-			transactionBuffer.addProduct(new Product(productBuffer.getID(), productBuffer.getName(),
-					productBuffer.getPrice(), productQtys.get(cartIndex), productBuffer.getReorderThreshold()));
+			transactionBuffer.addProduct(new Product(productBuffer.getID(),
+					productBuffer.getName(), productBuffer.getPrice(),
+					productQtys.get(cartIndex),
+					productBuffer.getReorderThreshold()));
 		}
 
 		memberList.search(memberID).addMemberTransaction(transactionBuffer);
@@ -105,11 +134,14 @@ public class Store implements Serializable {
 
 		if (!reorderList.isEmpty()) {
 			buffer.append("\n\n");
-			for (int reorderIndex = 0; reorderIndex < reorderList.size(); reorderIndex++) {
-				Product productToOrder = productList.search(reorderList.get(reorderIndex));
+			for (int reorderIndex = 0; reorderIndex < reorderList
+					.size(); reorderIndex++) {
+				Product productToOrder = productList
+						.search(reorderList.get(reorderIndex));
 				Order newOrder = new Order(productToOrder);
 				orderList.addOrder(newOrder);
-				buffer.append(Integer.toString(productToOrder.getReorderThreshold() * 2));
+				buffer.append(Integer
+						.toString(productToOrder.getReorderThreshold() * 2));
 				buffer.append(" units of ");
 				buffer.append(productToOrder.getName());
 				buffer.append(" were ordered in ");
@@ -122,10 +154,14 @@ public class Store implements Serializable {
 
 	/**
 	 * processes items in the order
+	 * 
+	 * @param orderID of the order to be processes
+	 * @return String of the processed order
 	 */
 	public String processShipment(String orderID) {
 		if (store.orderList.search(orderID) != null) {
-			Product updatedProduct = store.orderList.search(orderID).getProduct();
+			Product updatedProduct = store.orderList.search(orderID)
+					.getProduct();
 			store.productList.addExisitingProduct(updatedProduct.getID());
 			store.orderList.removeOrder(orderID);
 			return updatedProduct.toString();
@@ -137,13 +173,16 @@ public class Store implements Serializable {
 	public String changePrice(String productID, double newPrice) {
 		Product product = productList.search(productID);
 		productList.changePrice(productID, newPrice);
-		return "The new price for " + product.getName() + " is: " + product.getPrice();
+		return "The new price for " + product.getName() + " is: "
+				+ product.getPrice();
 	}
 
 	public String retrieveProductInfo(String productString) {
 		int count = 0;
-		String productDisplay = "Products beginning with " + productString + ":\n";
-		for (Iterator<Product> iterator = productList.iterator(); iterator.hasNext();) {
+		String productDisplay = "Products beginning with " + productString
+				+ ":\n";
+		for (Iterator<Product> iterator = productList.iterator(); iterator
+				.hasNext();) {
 			Product product = iterator.next();
 			if (product.getName().startsWith(productString)) {
 				productDisplay += product.toString() + "\n";
@@ -160,7 +199,8 @@ public class Store implements Serializable {
 	public String retrieveMemberInfo(String memberString) {
 		int count = 0;
 		String memberDisplay = "Members beginning with " + memberString + ":\n";
-		for (Iterator<Member> iterator = memberList.iterator(); iterator.hasNext();) {
+		for (Iterator<Member> iterator = memberList.iterator(); iterator
+				.hasNext();) {
 			Member member = iterator.next();
 			if (member.getName().startsWith(memberString)) {
 				memberDisplay += member.toString() + "\n";
@@ -170,18 +210,23 @@ public class Store implements Serializable {
 		return memberDisplay + "\n" + "Found " + count + " Results";
 	}
 
-	public String printTransactions(String memberID, Date startDate, Date endDate) {
+	public String printTransactions(String memberID, Date startDate,
+			Date endDate) {
 		int count = 0;
 		DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 		Member member = memberList.search(memberID);
 		String parsedDate = null;
 		String display = member.getName() + "'s transactions\n";
-		for (ListIterator<Transaction> iterator = member.getTransactions().listIterator(); iterator.hasNext();) {
+		for (ListIterator<Transaction> iterator = member.getTransactions()
+				.listIterator(); iterator.hasNext();) {
 			Transaction transaction = iterator.next();
-			if ((transaction.getDate().equals(startDate) || transaction.getDate().after(startDate))
-					&& (transaction.getDate().equals(endDate) || transaction.getDate().before(endDate))) {
+			if ((transaction.getDate().equals(startDate)
+					|| transaction.getDate().after(startDate))
+					&& (transaction.getDate().equals(endDate)
+							|| transaction.getDate().before(endDate))) {
 				parsedDate = dateFormat.format(transaction.getDate());
-				display += "Transaction ID: " + transaction.getTransactionID() + " , Date: " + parsedDate + " \n";
+				display += "Transaction ID: " + transaction.getTransactionID()
+						+ " , Date: " + parsedDate + " \n";
 				display += transaction.listProducts() + "\n";
 				count++;
 			}
@@ -192,7 +237,8 @@ public class Store implements Serializable {
 	public String listOutstandingOrders() {
 		StringBuilder buffer = new StringBuilder();
 		buffer.append("ID\tProduct\t\tDate\tQuantity\n");
-		for (Iterator<Order> iterator = orderList.iterator(); iterator.hasNext();) {
+		for (Iterator<Order> iterator = orderList.iterator(); iterator
+				.hasNext();) {
 			Order order = (Order) iterator.next();
 			buffer.append(order.getID());
 			buffer.append("\t");
@@ -209,7 +255,8 @@ public class Store implements Serializable {
 	public String listAllProducts() {
 		StringBuilder buffer = new StringBuilder();
 		buffer.append("Name\t\tID\tOn Hand\tPrice\tReorder\n");
-		for (Iterator<Product> iterator = productList.iterator(); iterator.hasNext();) {
+		for (Iterator<Product> iterator = productList.iterator(); iterator
+				.hasNext();) {
 			Product product = (Product) iterator.next();
 			buffer.append(product.getName());
 			buffer.append("\t\t");

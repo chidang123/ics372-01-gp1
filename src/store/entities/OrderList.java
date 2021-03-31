@@ -27,7 +27,8 @@ public class OrderList implements Iterable<Order>, Serializable {
 	 * removes an order with the passed ID number from the list
 	 */
 	public Order removeOrder(String orderID) {
-		for (ListIterator<Order> iterator = orders.listIterator(); iterator.hasNext();) {
+		for (ListIterator<Order> iterator = orders.listIterator(); iterator
+				.hasNext();) {
 			Order order = iterator.next();
 			String id = order.getID();
 			if (id.equals(orderID)) {
@@ -44,7 +45,8 @@ public class OrderList implements Iterable<Order>, Serializable {
 	 * @param productID id of the product
 	 */
 	public Order removeOrderOnProduct(String productID) {
-		for (ListIterator<Order> iterator = orders.listIterator(); iterator.hasNext();) {
+		for (ListIterator<Order> iterator = orders.listIterator(); iterator
+				.hasNext();) {
 			Order order = iterator.next();
 			String id = order.getProduct().getID();
 			if (id.equals(productID)) {
@@ -61,9 +63,27 @@ public class OrderList implements Iterable<Order>, Serializable {
 	 * @param orderID id of the order
 	 */
 	public Order search(String orderID) {
-		for (Iterator<Order> iterator = orders.iterator(); iterator.hasNext();) {
+		for (Iterator<Order> iterator = orders.iterator(); iterator
+				.hasNext();) {
 			Order order = iterator.next();
 			if (order.getID().equals(orderID)) {
+				return order;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * checks whether an order with a given productId exists
+	 * 
+	 * @param productId of the product associated with the order
+	 */
+	public Order searchByProduct(String productID) {
+		for (ListIterator<Order> iterator = orders.listIterator(); iterator
+				.hasNext();) {
+			Order order = iterator.next();
+			String id = order.getProduct().getID();
+			if (id.equals(productID)) {
 				return order;
 			}
 		}

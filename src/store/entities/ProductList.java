@@ -19,13 +19,20 @@ public class ProductList implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private List<Product> products = new LinkedList<Product>();
 
-	// business case 5
+	/**
+	 * Adds to the inventory of existing products
+	 * 
+	 * @param id of the product to be added
+	 */
 	public void addExisitingProduct(String id) {
-		for (Iterator<Product> iterator = products.iterator(); iterator.hasNext();) {
+		for (Iterator<Product> iterator = products.iterator(); iterator
+				.hasNext();) {
 			Product product = iterator.next();
 			if (product.getID().equals(id)) {
-				product.setInventory(product.getReorderThreshold()); // only *2 for new products
-				break; // breaking loop and function - no longer needs it since item found
+				product.setInventory(product.getInventory()
+						+ (product.getReorderThreshold() * 2));
+				;
+				break;
 			}
 		}
 	}
@@ -38,7 +45,8 @@ public class ProductList implements Serializable {
 
 	// business case 7
 	public void showProductInfo(String id) {
-		for (Iterator<Product> iterator = products.iterator(); iterator.hasNext();) {
+		for (Iterator<Product> iterator = products.iterator(); iterator
+				.hasNext();) {
 			Product product = iterator.next();
 			if (product.getID().equals(id)) {
 				product.toString();
@@ -47,11 +55,12 @@ public class ProductList implements Serializable {
 	}
 
 	/**
-	 * finds a product via ID number and changes the product's price to the price
-	 * passed as an argument
+	 * finds a product via ID number and changes the product's price to the
+	 * price passed as an argument
 	 */
 	public void changePrice(String id, double newPrice) {
-		for (Iterator<Product> iterator = products.iterator(); iterator.hasNext();) {
+		for (Iterator<Product> iterator = products.iterator(); iterator
+				.hasNext();) {
 			Product product = iterator.next();
 			if (product.getID().equals(id)) {
 				product.setPrice(newPrice);
@@ -73,7 +82,8 @@ public class ProductList implements Serializable {
 	 * products
 	 */
 	public Product search(String productId) {
-		for (Iterator<Product> iterator = products.iterator(); iterator.hasNext();) {
+		for (Iterator<Product> iterator = products.iterator(); iterator
+				.hasNext();) {
 			Product product = iterator.next();
 			if (product.getID().equals(productId)) {
 				return product;
@@ -89,7 +99,8 @@ public class ProductList implements Serializable {
 	public String getBasics() {
 		double total = 0;
 		String result = "";
-		for (Iterator<Product> iterator = products.iterator(); iterator.hasNext();) {
+		for (Iterator<Product> iterator = products.iterator(); iterator
+				.hasNext();) {
 			Product product = iterator.next();
 			result += product.getName() + " , " + product.getPrice() + "\n";
 			total += product.getPrice();
@@ -97,7 +108,7 @@ public class ProductList implements Serializable {
 		result += "Total: " + total;
 		return result;
 	}
-	
+
 	@Override
 	public String toString() {
 		return products.toString();
