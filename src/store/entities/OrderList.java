@@ -42,7 +42,7 @@ public class OrderList implements Iterable<Order>, Serializable {
 	/**
 	 * removes an order that contains a product with the passed ID number
 	 * 
-	 * @param productID id of the product
+	 * @param productID
 	 */
 	public Order removeOrderOnProduct(String productID) {
 		for (ListIterator<Order> iterator = orders.listIterator(); iterator
@@ -60,7 +60,7 @@ public class OrderList implements Iterable<Order>, Serializable {
 	/**
 	 * checks whether an order with a given ID number exists
 	 * 
-	 * @param orderID id of the order
+	 * @param orderID
 	 */
 	public Order search(String orderID) {
 		for (Iterator<Order> iterator = orders.iterator(); iterator
@@ -76,7 +76,7 @@ public class OrderList implements Iterable<Order>, Serializable {
 	/**
 	 * checks whether an order with a given productId exists
 	 * 
-	 * @param productId of the product associated with the order
+	 * @param productId
 	 */
 	public Order searchByProduct(String productID) {
 		for (ListIterator<Order> iterator = orders.listIterator(); iterator

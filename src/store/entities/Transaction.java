@@ -3,6 +3,9 @@ package store.entities;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * represents a single transaction of checkout
+ */
 public class Transaction implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Date date;
@@ -33,7 +36,7 @@ public class Transaction implements Serializable {
 	public void addProduct(Product product) {
 		productList.addNewProduct(product);
 	}
-	
+
 	public String listProducts() {
 		return productList.getBasics();
 	}

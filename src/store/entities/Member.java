@@ -6,12 +6,10 @@ import java.io.ObjectOutputStream;
 //Change
 import java.io.Serializable;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.ListIterator;
 
 /**
  * Member represents a member of Red River Co-Op.
@@ -37,7 +35,8 @@ public class Member implements Serializable {
 	 * @param address address of the member
 	 * @param phone   phone number of the member
 	 */
-	public Member(String name, String address, String phoneNumber, boolean feePaid) {
+	public Member(String name, String address, String phoneNumber,
+			boolean feePaid) {
 		this.name = name;
 		this.address = address;
 		this.dateJoined = new GregorianCalendar();
@@ -98,29 +97,6 @@ public class Member implements Serializable {
 	}
 
 	/**
-	 * returns the transaction Id and date of every transaction between two dates
-	 * 
-	 * @param startDate
-	 * @param endDate
-	 * @return a string of all transaction Ids and date between two dates
-	 */
-
-	public String getTransactionInfo(Date startDate, Date endDate) {
-		String result = name + "'s transactions\n";
-		for (ListIterator<Transaction> iterator = transactions.listIterator(); iterator.hasNext();) {
-			Transaction transaction = iterator.next();
-			if ((transaction.getDate().equals(startDate) || transaction.getDate().after(startDate))
-					&& (transaction.getDate().equals(endDate) || transaction.getDate().before(endDate))) {
-				result += "Transaction ID: " + transaction.getTransactionID() + "\nDate: " + transaction.getDate()
-						+ "\n";
-			}
-		}
-		return result;
-	}
-
-	/**
-	 * returns an iterator of the list of transactions
-	 * 
 	 * @return iterator to list of transactions iterator
 	 */
 	public Iterator<Transaction> iterator() {
@@ -129,9 +105,11 @@ public class Member implements Serializable {
 
 	@Override
 	public String toString() {
-		String string = "Id: " + id + ", member name: " + name + ", address: " + address + ", date joined: "
-				+ dateJoined.get(Calendar.MONTH) + "/" + dateJoined.get(Calendar.DATE) + "/"
-				+ dateJoined.get(Calendar.YEAR) + ", phone number: " + phoneNumber;
+		String string = "Id: " + id + ", member name: " + name + ", address: "
+				+ address + ", date joined: " + dateJoined.get(Calendar.MONTH)
+				+ "/" + dateJoined.get(Calendar.DATE) + "/"
+				+ dateJoined.get(Calendar.YEAR) + ", phone number: "
+				+ phoneNumber;
 
 		return string;
 	}
@@ -161,11 +139,25 @@ public class Member implements Serializable {
 		return true;
 	}
 
+	/**
+	 * Manually saves the static variable IdCounter when the program saves.
+	 * 
+	 * @param output
+	 * @throws IOException
+	 */
 	public static void save(ObjectOutputStream output) throws IOException {
 		output.writeObject(idCounter);
 	}
 
-	public static void retrieve(ObjectInputStream input) throws IOException, ClassNotFoundException {
+	/**
+	 * Manually reads in the static variable idCounter when loading saved data.
+	 * 
+	 * @param input
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
+	public static void retrieve(ObjectInputStream input)
+			throws IOException, ClassNotFoundException {
 		idCounter = (int) input.readObject();
 	}
 }

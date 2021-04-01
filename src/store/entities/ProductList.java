@@ -1,20 +1,17 @@
 /***
  * @author Keith Butterfield
- * 
- * Took code and inspiration from Andrew's Member List java file
- * 
  */
 
 package store.entities;
 
-//Change//Change//Change
 import java.io.Serializable;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-//Took code from Andrew's Member List java file
-
+/**
+ * ProductList is a collection class for Product
+ */
 public class ProductList implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private List<Product> products = new LinkedList<Product>();

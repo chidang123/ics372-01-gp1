@@ -19,11 +19,13 @@ public class MemberList implements Serializable {
 	 * searches for the given memberId
 	 * 
 	 * @param memberId
-	 * @return the member if it exists, or null if there is no member with that id
+	 * @return the member if it exists, or null if there is no member with that
+	 *         id
 	 */
 
 	public Member search(String memberId) {
-		for (Iterator<Member> iterator = members.iterator(); iterator.hasNext();) {
+		for (Iterator<Member> iterator = members.iterator(); iterator
+				.hasNext();) {
 			Member member = iterator.next();
 			if (member.getID().equals(memberId)) {
 				return member;
@@ -51,22 +53,21 @@ public class MemberList implements Serializable {
 	}
 
 	/**
-	 * gets an iterator to the list of members
-	 * 
-	 * @return Iterator to the list of members
+	 * @returns an Iterator for the list of members
 	 */
 	public Iterator<Member> iterator() {
 		return members.iterator();
 	}
 
 	/**
-	 * The method below is an override of the toString method that displays a list
-	 * of all the members, along with each members' respective information.
+	 * The method below is an override of the toString method that displays a
+	 * list of all the members, along with each members' respective information.
 	 */
 	@Override
 	public String toString() {
 		String memberDisplay = "All Members: \n";
-		for (Iterator<Member> iterator = members.iterator(); iterator.hasNext();) {
+		for (Iterator<Member> iterator = members.iterator(); iterator
+				.hasNext();) {
 			Member member = iterator.next();
 			memberDisplay += member.toString() + "\n";
 		}

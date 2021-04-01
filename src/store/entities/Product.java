@@ -1,15 +1,14 @@
 /***
  * @author Keith Butterfield
- * 
- * Took code and inspiration from Andrew's Member java file
- * 
  */
 
-//Change
 package store.entities;
 
 import java.io.Serializable;
 
+/**
+ * This class represents individual products to be stocked in the store
+ */
 public class Product implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -19,7 +18,8 @@ public class Product implements Serializable {
 	private int inventory;
 	private int reorderThreshold;
 
-	public Product(String id, String name, double price, int inventory, int reorderThreshold) {
+	public Product(String id, String name, double price, int inventory,
+			int reorderThreshold) {
 		this.id = id;
 		this.name = name;
 		this.price = price;
@@ -57,7 +57,7 @@ public class Product implements Serializable {
 
 	public Boolean setInventory(int inventory) {
 		this.inventory = inventory;
-		if ( inventory <= this.reorderThreshold ) {
+		if (inventory <= this.reorderThreshold) {
 			return true;
 		}
 		return false;
@@ -71,11 +71,11 @@ public class Product implements Serializable {
 		this.reorderThreshold = reorderThreshold;
 	}
 
-	// Auto generated toString - will change if needed
 	@Override
 	public String toString() {
-		return "Product [id=" + id + ", name=" + name + ", price=" + price + ", inventory=" + inventory
-				+ ", reorderThreshold=" + reorderThreshold + "]";
+		return "Product [id=" + id + ", name=" + name + ", price=" + price
+				+ ", inventory=" + inventory + ", reorderThreshold="
+				+ reorderThreshold + "]";
 	}
 
 	@Override
